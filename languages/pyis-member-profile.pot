@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PyImageSearch Profile Plugin 1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/pyis-member-profile\n"
-"POT-Creation-Date: 2016-03-30 20:24:48+00:00\n"
+"POT-Creation-Date: 2016-03-30 20:27:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: pyis-member-profile.php:120
+#: pyis-member-profile.php:122
 msgid ""
 "<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires "
 "<strong><a href = \"https://www.memberpress.com/\" "

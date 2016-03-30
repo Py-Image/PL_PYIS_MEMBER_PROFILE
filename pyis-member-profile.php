@@ -33,6 +33,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
 
             if ( self::$instance == null ) {
                 self::$instance = new PyisMemberProfile();
+                self::$instance->setup_constants();
+                self::$instance->load_textdomain();
                 self::$instance->hooks();
             }
 
