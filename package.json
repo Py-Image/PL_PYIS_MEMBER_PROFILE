@@ -1,0 +1,10 @@
+{
+    "name": "pyis-member-profile",
+    "version": "1.0.0",
+    "devDependencies": {
+        "grunt": "*",
+        "matchdep": "*",
+        "grunt-po2mo": "*",
+        "grunt-wp-i18n": "*"
+    }
+}
