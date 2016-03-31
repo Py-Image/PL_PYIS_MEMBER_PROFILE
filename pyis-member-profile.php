@@ -160,7 +160,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         public function template_title( $title, $id ) {
             
             if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
-                return __( 'Members Directory', $plugin->id );
+                return __( 'Member Directory', $plugin->id );
             }
             
             return $title;
@@ -170,7 +170,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         public function template_title_tag( $title, $sep, $seplocation ) {
             
             if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
-                return sprintf( __( 'Members Directory %s', $plugin->id ), $title );
+                return sprintf( __( 'Member Directory %s', $plugin->id ), $title );
             }
             
             return $title;
