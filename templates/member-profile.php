@@ -57,12 +57,36 @@ get_header();
 <div class="x-container max width offset">
     <div class="full-width" role="main">
         
-        <?php echo get_avatar( $user_data->user_email ); ?>
+        <!-- Pushes content more toward center -->
+        <div class="x-container max width offset">
         
-        <?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; ?>
+            <?php echo get_avatar( $user_data->user_email, 150, false, '', array( 'class' => 'alignleft' ) ); ?>
+
+            <h3 style="margin-top: 0;"><?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; ?></h3>
+
+            <?php 
+
+            $register_date = new DateTime( $user_data->user_registered );
+
+            ?>
+            
+            <?php echo do_shortcode( '[learndash_course_progress user_id=' . $user->data->ID . ']' ); ?>
+
+            <?php echo apply_filters( 'the_content', sprintf( __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), $register_date->format( 'F jS, Y' ) ) ); ?>
+
+            <?php echo apply_filters( 'the_content', sprintf( __( 'Course Progress %f%%', PyisMemberProfile::$plugin_id ), 3.5 ) ); ?>
+
+            <?php echo apply_filters( 'the_content', sprintf( __( 'Completed Course %s', PyisMemberProfile::$plugin_id ), 'Yes' ) ); ?>
+
+            <strong><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></strong>
+            <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
+
+            <strong><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></strong>
+            <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
+            
+        </div>
 
     </div>
-
 </div>
 
 <?php get_footer();
