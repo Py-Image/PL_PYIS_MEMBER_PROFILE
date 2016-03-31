@@ -70,8 +70,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         private function hooks() {
             
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
-            add_filter( 'the_title', array( $this, 'template_title' ), 10, 2 );
-            add_filter( 'wp_title', array( $this, 'template_title_tag' ), 10, 3 );
+            add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
+            add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
             
         }
         
@@ -141,7 +141,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function template_redirect( $template ) {
             
-            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?$/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 // make sure the server responds with 200 instead of error code 404
                 header( 'HTTP/1.1 200 OK' );
@@ -152,25 +152,32 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
             
             }
+            else if ( preg_match( '/\/members\/.+_.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+                
+                header( 'HTTP/1.1 200 OK' );
+                
+                return $this->pyis_locate_template( 'member-profile.php' );
+                
+                die();
+                
+            }
             
             return $template;
             
         }
         
-        public function template_title( $title, $id ) {
+        public function template_title( $title, $sep, $seplocation ) {
             
-            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?$/i', $_SERVER['REQUEST_URI'] ) ) {
                 return __( 'Member Directory', $plugin->id );
             }
-            
-            return $title;
-            
-        }
-        
-        public function template_title_tag( $title, $sep, $seplocation ) {
-            
-            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
-                return sprintf( __( 'Member Directory %s', $plugin->id ), $title );
+            else if ( preg_match( '/\/members\/.+_.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+    
+                // Made available before wp_head() is called
+                global $user_data;
+
+                return sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name );
+                
             }
             
             return $title;
