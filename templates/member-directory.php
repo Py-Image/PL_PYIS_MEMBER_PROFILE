@@ -17,33 +17,76 @@ global $wp_query;
 $wp_query->is_404 = false;
 $wp_query->is_page = true;
 
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+$number_per_page = 4;
+
 get_header();
 ?>
 
-<?php 
+<div class="x-container max width offset">
+    <div class="full-width" role="main">
 
-$users = new WP_User_Query(
-    array(
-        'role' => 'subscriber',
-        'number' => -1,
-        'meta_key' => 'last_name',
-        'orderby' => 'meta_value',
-        'order' => 'ASC'
-    )
-);
+        <?php 
 
-$users = $users->get_results();
+        $user_query = new WP_User_Query(
+            array(
+                'role' => 'subscriber',
+                'number' => $number_per_page,
+                'meta_key' => 'last_name',
+                'orderby' => 'meta_value',
+                'order' => 'ASC',
+                'paged' => $paged,
+            )
+        );
 
-foreach ( $users as $user ) {
+        if ( ! empty( $user_query->results ) ) : ?>
+
+            <table>
+                
+                <thead>
+                    <th></th>
+                    <th><?php _e( 'Name', PyisMemberProfile::$plugin_id ); ?></th>
+                    <th><?php _e( 'Course Progress', PyisMemberProfile::$plugin_id ); ?></th>
+                    <th><?php _e( 'Graduated', PyisMemberProfile::$plugin_id ); ?></th>
+                </thead>
+
+            <?php foreach ( $user_query->results as $user ) :
+
+                $user_data = get_userdata( $user->data->ID ); ?>
+
+                <tr>
+                    
+                    <td><?php echo get_avatar( $user_data->user_email ); ?></td>
+                    <td><?php echo "$user_data->last_name, $user_data->first_name"; ?></td>
+                    <td><?php echo sprintf( '%f%%', 3.5 ); ?></td>
+                    <td><?php _e( 'Yes', PyisMemberProfile::$plugin_id ); ?></td>
+
+                </tr>
+
+            <?php endforeach; ?>
+
+            </table>
+        
+            <?php $total_pages = ceil( $user_query->total_users / $number_per_page ); ?>
+
+            <div class="x-pagination">
+                <?php echo paginate_links( array(
+                    'current' => $paged,  
+                    'total' => $total_pages,  
+                    'prev_text' => __( '&laquo;', PyisMemberProfile::$plugin_id ),
+                    'next_text' => __( '&raquo;', PyisMemberProfile::$plugin_id ),
+                    'type' => 'list',
+                ) ); ?>
+            </div>
+        
+        <?php else :
+        
+        _e( 'No Members Found Matching Your Request', PyisMemberProfile::$plugin_id );
+
+        endif; ?>
+        
+    </div>
     
-    $user_data = get_userdata( $user->data->ID );
-    
-    echo "$user_data->first_name $user_data->last_name";
-    echo '<br />';
-    
-}
+</div>
 
-?>
-
-<?php
-get_footer();
+<?php get_footer();

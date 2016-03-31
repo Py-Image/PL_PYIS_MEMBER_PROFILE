@@ -141,9 +141,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function template_redirect( $template ) {
             
-            //var_dump( $post );
-            
-            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 // make sure the server responds with 200 instead of error code 404
                 header( 'HTTP/1.1 200 OK' );
@@ -161,8 +159,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         
         public function template_title( $title, $id ) {
             
-            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
-                return __( 'Members Directory', THEME_ID );
+            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+                return __( 'Members Directory', $plugin->id );
             }
             
             return $title;
@@ -171,8 +169,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         
         public function template_title_tag( $title, $sep, $seplocation ) {
             
-            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
-                return sprintf( __( 'Members Directory %s', THEME_ID ), $title );
+            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+                return sprintf( __( 'Members Directory %s', $plugin->id ), $title );
             }
             
             return $title;
