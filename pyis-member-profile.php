@@ -70,6 +70,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         private function hooks() {
             
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
+            add_filter( 'the_title', array( $this, 'template_title' ), 10, 2 );
+            add_filter( 'wp_title', array( $this, 'template_title_tag' ), 10, 3 );
             
         }
         
@@ -139,10 +141,12 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function template_redirect( $template ) {
             
+            //var_dump( $post );
+            
             if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 // make sure the server responds with 200 instead of error code 404
-                header('HTTP/1.1 200 OK');
+                header( 'HTTP/1.1 200 OK' );
                 
                 return $this->pyis_locate_template( 'member-directory.php' );
                 
@@ -152,6 +156,26 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
             
             return $template;
+            
+        }
+        
+        public function template_title( $title, $id ) {
+            
+            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+                return __( 'Members Directory', THEME_ID );
+            }
+            
+            return $title;
+            
+        }
+        
+        public function template_title_tag( $title, $sep, $seplocation ) {
+            
+            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+                return sprintf( __( 'Members Directory %s', THEME_ID ), $title );
+            }
+            
+            return $title;
             
         }
 
