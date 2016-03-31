@@ -68,7 +68,91 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          * @return      void
          */
         private function hooks() {
+            
+            add_filter( 'template_include', array( $this, 'template_redirect' ) );
+            
+        }
+        
+        /**
+         * Retrieve the name of the highest priority template file that exists.
+         *
+         * Searches in the STYLESHEETPATH before TEMPLATEPATH so that themes which
+         * inherit from a parent theme can just overload one file. If the template is
+         * not found in either of those, it looks in the theme-compat folder last.
+         *
+         * Taken from bbPress
+         *
+         * @access      private
+         * @since       v1.0
+         *
+         * @param       string|array $template_names Template file(s) to search for, in order.
+         * @param       bool $load If true the template file will be loaded if it is found.
+         * @param       bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
+         * @return      string The template filename if one is located.
+         */
+        private function pyis_locate_template( $template_names, $load = false, $require_once = true ) {
+            
+            // No file found yet
+            $located = false;
 
+            // Try to find a template file
+            foreach ( ( array )$template_names as $template_name ) {
+
+                // Continue if template is empty
+                if ( empty( $template_name ) )
+                    continue;
+
+                // Trim off any slashes from the template name
+                $template_name = ltrim( $template_name, '/' );
+
+                if ( file_exists( trailingslashit( get_stylesheet_directory() ) . 'pyis/' . $template_name ) ) {
+                    // Check child theme first
+                    $located = trailingslashit( get_stylesheet_directory() ) . 'pyis/' . $template_name;
+                    break;
+                }
+                elseif ( file_exists( trailingslashit( get_template_directory() ) . 'pyis/' . $template_name ) ) {
+                    // Check parent theme next
+                    $located = trailingslashit( get_template_directory() ) . 'pyis/' . $template_name;
+                    break;
+                }
+                elseif ( file_exists( trailingslashit( PYIS_DIR ) . 'templates/' . $template_name ) ) {
+                    // Check plugin directory last
+                    $located = trailingslashit( PYIS_DIR ) . 'templates/' . $template_name;
+                    break;
+                }
+                
+            }
+
+            if ( ( true == $load ) && ! empty( $located ) )
+                load_template( $located, $require_once );
+
+            return $located;
+            
+        }
+        
+        /**
+         * Load different template based on Page Slug without making a Page within WordPress
+         *
+         * @access      public
+         * @since       1.0
+         * @return      string $template Template file to be loaded
+         */
+        public function template_redirect( $template ) {
+            
+            if ( preg_match( '/\/member-directory(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+                
+                // make sure the server responds with 200 instead of error code 404
+                header('HTTP/1.1 200 OK');
+                
+                return $this->pyis_locate_template( 'member-directory.php' );
+                
+                // kill off the request so server doesn't render the 404 message 
+                die();
+            
+            }
+            
+            return $template;
+            
         }
 
         /**
