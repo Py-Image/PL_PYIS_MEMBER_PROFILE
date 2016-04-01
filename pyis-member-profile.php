@@ -152,6 +152,16 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
             
             }
+            else if ( preg_match( '/\/members\/.+_.+(|\/)?json$/i', $_SERVER['REQUEST_URI'] ) ) {
+                
+                header( 'HTTP/1.1 200 OK' );
+                header( 'Content-Type: application/json' );
+                
+                return $this->pyis_locate_template( 'member-json.php' );
+                
+                die();
+                
+            }
             else if ( preg_match( '/\/members\/.+_.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );

@@ -79,10 +79,12 @@ get_header();
             <?php echo apply_filters( 'the_content', sprintf( __( 'Completed Course %s', PyisMemberProfile::$plugin_id ), 'Yes' ) ); ?>
 
             <strong><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></strong>
-            <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
+            <?php echo apply_filters( 'the_content', get_user_meta( $user->data->ID, 'mepr_user_message', true ) ); ?>
 
             <strong><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></strong>
             <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
+            
+            <?php echo get_user_meta( $user->data->ID, 'twitter', true ); ?>
             
         </div>
 
