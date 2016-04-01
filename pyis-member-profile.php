@@ -73,6 +73,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
             
+            add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
+            
         }
         
         /**
@@ -191,6 +193,15 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
             
             return $title;
+            
+        }
+                       
+        public function add_contact_methods( $profile_fields ) {
+            
+            $profile_fields['linkedin'] = 'LinkedIn';
+            $profile_fields['github'] = 'GitHub';
+            
+            return $profile_fields;
             
         }
 
