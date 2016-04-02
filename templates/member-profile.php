@@ -67,16 +67,31 @@ get_header();
             <?php 
 
             $register_date = new DateTime( $user_data->user_registered );
+            $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
+            $course_progress = ( $course_progress[386]['completed'] / $course_progress[386]['total'] ) * 100;
 
             ?>
-            
-            <?php echo do_shortcode( '[learndash_course_progress user_id=' . $user->data->ID . ']' ); ?>
 
-            <?php echo apply_filters( 'the_content', sprintf( __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), $register_date->format( 'F jS, Y' ) ) ); ?>
+            <?php echo apply_filters( 'the_content', 
+                sprintf( 
+                    __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
+                    $register_date->format( 'F jS, Y' ) 
+                ) 
+            ); ?>
 
-            <?php echo apply_filters( 'the_content', sprintf( __( 'Course Progress %f%%', PyisMemberProfile::$plugin_id ), 3.5 ) ); ?>
+            <?php echo apply_filters( 'the_content', 
+                sprintf( 
+                    __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
+                    number_format( $course_progress, 2, '.', ',' )
+                ) 
+            ); ?>
 
-            <?php echo apply_filters( 'the_content', sprintf( __( 'Completed Course %s', PyisMemberProfile::$plugin_id ), 'Yes' ) ); ?>
+            <?php echo apply_filters( 'the_content', 
+                 sprintf( 
+                     __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
+                     ( learndash_course_completed( $user->data->ID, 386 ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
+                 ) 
+            ); ?>
 
             <strong><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></strong>
             <?php echo apply_filters( 'the_content', get_user_meta( $user->data->ID, 'mepr_user_message', true ) ); ?>

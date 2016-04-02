@@ -52,7 +52,12 @@ get_header();
 
             <?php foreach ( $user_query->results as $user ) :
 
-                $user_data = get_userdata( $user->data->ID ); ?>
+                $user_data = get_userdata( $user->data->ID ); 
+                
+                $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
+                $course_progress = ( $course_progress[386]['completed'] / $course_progress[386]['total'] ) * 100;
+                
+                ?>
 
                 <tr>
                     
@@ -66,8 +71,8 @@ get_header();
                             <?php echo "$user_data->last_name, $user_data->first_name"; ?>
                         </a>
                     </td>
-                    <td><?php echo sprintf( '%f%%', 3.5 ); ?></td>
-                    <td><?php _e( 'Yes', PyisMemberProfile::$plugin_id ); ?></td>
+                    <td><?php echo sprintf( '%g%%', number_format( $course_progress, 2, '.', ',' ) ); ?></td>
+                    <td><?php echo ( learndash_course_completed( $user->data->ID, 386 ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) ; ?></td>
 
                 </tr>
 
