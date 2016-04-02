@@ -253,7 +253,24 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             ?>
 
             <div id="message" class="error notice is-dismissible">
-                <?php _e( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "https://www.memberpress.com/" target="_blank">MemberPress</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ); ?>
+                <?php _e( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "//www.memberpress.com/" target="_blank">MemberPress</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ); ?>
+            </div>
+
+            <?php
+        }
+        
+        /**
+         * Send an error message if LearnDash is not installed
+         *
+         * @access      public
+         * @since       1.0
+         * @return      void
+         */
+        public static function missing_learndash_notice() {
+            ?>
+
+            <div id="message" class="error notice is-dismissible">
+                <?php _e( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "//www.learndash.com/" target="_blank">LearnDash</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ); ?>
             </div>
 
             <?php
@@ -273,14 +290,21 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
 add_action( 'plugins_loaded', 'PyisMemberProfile_load', 999 );
 function PyisMemberProfile_load() {
     
-    if ( class_exists( 'MeprHooks' ) ) {
+    if ( class_exists( 'MeprHooks' ) && class_exists( 'SFWD_LMS' ) ) {
      
         return PyisMemberProfile::get_instance();
         
     }
-    else {
+    
+    if ( ! class_exists( 'MeprHooks' ) ) {
         
         add_action( 'admin_notices', array( 'PyisMemberProfile', 'missing_memberpress_notice' ) );
+        
+    }
+    
+    if ( ! class_exists( 'SFWD_LMS' ) ) {
+        
+        add_action( 'admin_notices', array( 'PyisMemberProfile', 'missing_learndash_notice' ) );
         
     }
     
