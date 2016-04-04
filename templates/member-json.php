@@ -46,14 +46,16 @@ $user = $user_query->results[0];
 
 // Now that we have queried the User from the URL, we can access a lot more data
 $user_data = get_userdata( $user->data->ID );
+$course_id = get_theme_mod( 'pyis_course', 0 );
+
 $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
-$course_progress = ( $course_progress[386]['completed'] / $course_progress[386]['total'] ) * 100;
+$course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
 $data = array(
     'last_name' => $user_data->last_name,
     'first_name' => $user_data->first_name,
     'course_progress' => $course_progress,
-    'course_completed' => learndash_course_completed( $user->data->ID, 386 ),
+    'course_completed' => learndash_course_completed( $user->data->ID, $course_id ),
     'url' => get_bloginfo( 'url' ) . $url,
 );
 

@@ -66,9 +66,11 @@ get_header();
 
             <?php 
 
+            $course_id = get_theme_mod( 'pyis_course', 0 );
+            
             $register_date = new DateTime( $user_data->user_registered );
             $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
-            $course_progress = ( $course_progress[386]['completed'] / $course_progress[386]['total'] ) * 100;
+            $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
             ?>
 
@@ -89,7 +91,7 @@ get_header();
             <?php echo apply_filters( 'the_content', 
                  sprintf( 
                      __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
-                     ( learndash_course_completed( $user->data->ID, 386 ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
+                     ( learndash_course_completed( $user->data->ID, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
                  ) 
             ); ?>
 

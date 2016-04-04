@@ -73,6 +73,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
             
+            add_action( 'customize_register', array( $this, 'customize_register' ) );
+            
             add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
             
         }
@@ -193,6 +195,47 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
             
             return $title;
+            
+        }
+        
+        public function customize_register( $wp_customize ) {
+
+            // General Theme Options
+            $wp_customize->add_section( 'pyis_customizer_section' , array(
+                    'title'      => __( 'PyImageSearch Profile Settings', $this->plugin_id ),
+                    'priority'   => 30,
+                ) 
+            );
+            
+            $args = array(
+                'posts_per_page' => '-1',
+                'post_type' => 'sfwd-courses',
+                'post_status' => 'publish',
+                'orderby' => 'title',
+                'order' => 'ASC',
+            );
+            
+            $course_query = get_posts( $args );
+            $courses = array( __( 'Select a Course', $this->plugin_id ) ); // No Posts are assigned post_id of 0 anyway
+            
+            foreach ( $course_query as $course ) {
+                
+                $courses[ $course->ID ] = $course->post_title; 
+                
+            }
+
+            $wp_customize->add_setting( 'pyis_course', array(
+                    'default' => 0,
+                    'transport' => 'refresh',
+                ) 
+            );
+            $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'pyis_course', array(
+                'label' => __( 'Course', $this->plugin_id ),
+                'section' => 'pyis_customizer_section',
+                'settings' => 'pyis_course',
+                'type' => 'select',
+                'choices' => $courses,
+            ) ) );
             
         }
                        
