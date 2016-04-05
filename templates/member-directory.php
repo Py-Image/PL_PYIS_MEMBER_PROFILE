@@ -19,25 +19,110 @@ $wp_query->is_page = true;
 
 $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $number_per_page = 4;
+$course_id = get_theme_mod( 'pyis_course', 0 );
 
 get_header();
 ?>
 
 <div class="x-container max width offset">
     <div class="full-width" role="main">
-
+        
+        <form method="GET" class="form-search x-container max width offset">
+            <div class="x-container max width offset">
+                <div class="x-column x-sm x-1-4">
+                    <label>
+                        <input type="checkbox" name="graduated" value="yes" <?php echo ( trim( strtolower( $_GET['graduated'] ) ) == 'yes' ? 'checked="checked"' : '' ); ?> /> <?php _e( 'Graduated', PyisMemberProfile::$plugin_id ); ?>
+                    </label>
+                </div>
+                <div class="x-column x-sm x-1-4">
+                    <label for="order"><?php _e( 'Filter By:', PyisMemberProfile::$plugin_id ); ?>
+                        <select name="order">
+                            <?php
+                                $options = array(
+                                    'asc' => __( 'Last Name A-Z', PyisMemberProfile::$plugin_id ),
+                                    'desc' => __( 'Last Name Z-A', PyisMemberProfile::$plugin_id ),
+                                );
+                            
+                                if ( isset( $_GET['order'] ) ) :
+                                    $set_value = trim( strtolower( $_GET['order'] ) );
+                                else :
+                                    $set_value = 'asc';
+                                endif;
+                            
+                                foreach( $options as $key => $value ) : ?>
+                                    
+                                    <option value="<?php echo $key; ?>"<?php echo ( $set_value == $key ? ' selected' : '' ); ?>><?php echo $value; ?></option>
+                                    
+                                <?php endforeach; ?>
+                        </select>
+                    </label>
+                </div>
+                <div class="x-column x-sm x-1-4">
+                    <label for="s" class="visually-hidden"><?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?></label>
+                    <input type="text" class="search-query" name="s" value="<?php echo $_GET['s']; ?>" placeholder="<?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?>" />
+                </div>
+                <div class="x-column x-sm x-1-4">
+                    <input type="submit" />
+                </div>
+            </div>
+            <div class="x-container max width offset">
+                
+            </div>
+        </form>
+        
         <?php 
-
-        $user_query = new WP_User_Query(
-            array(
-                'role' => 'subscriber',
-                'number' => $number_per_page,
-                'meta_key' => 'last_name',
-                'orderby' => 'meta_value',
-                'order' => 'ASC',
-                'paged' => $paged,
-            )
+        
+        $user_args = array(
+            'role' => 'subscriber',
+            'number' => $number_per_page,
+            'meta_key' => 'last_name',
+            'orderby' => 'meta_value',
+            'order' => 'ASC',
+            'paged' => $paged,
+            'meta_query'     => array(
+                'relation' => 'AND', // Based on $_GET, we tack onto this with successive rules that must all be TRUE
+            ),
         );
+        
+        if ( ( isset( $_GET['s'] ) ) && ( $_GET['s'] !== '' ) ) {
+            
+            $user_args['meta_query'][] = array(
+                'relation' => 'OR',
+                array(
+                    'key' => 'first_name',
+                    'value' => esc_attr( trim( urldecode( $_GET['s'] ) ) ),
+                    'compare' => 'LIKE',
+                ),
+                array(
+                    'key' => 'last_name',
+                    'value' => esc_attr( trim( urldecode( $_GET['s'] ) ) ),
+                    'compare' => 'LIKE',
+                ),
+            );
+            
+        }
+        
+        if ( isset( $_GET['order'] ) && ( trim( strtolower( $_GET['order'] ) ) == 'asc' ) ) {
+            $user_args['order'] = 'ASC';
+        }
+        else if ( isset( $_GET['order'] ) ) {
+            $user_args['order'] = 'DESC';
+        }
+        
+        if ( isset( $_GET['graduated'] ) && ( trim( strtolower( $_GET['graduated'] ) ) == 'yes' ) ) {
+            $user_args['meta_query'][] = array(
+                'key' => 'course_completed_' . $course_id,
+                'compare' => 'EXISTS',
+            );
+        }
+        else if ( isset( $_GET['graduated'] ) ) {
+            $user_args['meta_query'][] = array(
+                'key' => 'course_completed_' . $course_id,
+                'compare' => 'NOT EXISTS',
+            );
+        }
+
+        $user_query = new WP_User_Query( $user_args );
 
         if ( ! empty( $user_query->results ) ) : ?>
 
@@ -52,10 +137,10 @@ get_header();
 
             <?php foreach ( $user_query->results as $user ) :
 
-                $user_data = get_userdata( $user->data->ID ); 
-                $course_id = get_theme_mod( 'pyis_course', 0 );
+                $user_data = get_userdata( $user->data->ID );
                 
                 $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
+                
                 $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
                 
                 ?>
