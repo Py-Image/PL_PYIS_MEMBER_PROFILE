@@ -155,7 +155,7 @@ get_header();
                     
                     <td>
                         <a href="/members/<?php echo strtolower( rawurlencode( $user_data->user_login ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
-                            <img id="pyis-profile-image" class="alignleft" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user_data->user_email ); ?>" style="max-width: 96px; max-height: 196px;" />
+                            <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user_data->user_email ); ?>" style="max-width: 96px; max-height: 196px;" />
                         </a>
                     </td>
                     <td>

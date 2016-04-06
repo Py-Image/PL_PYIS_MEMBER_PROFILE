@@ -87,6 +87,11 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'user_register', array( $this, 'profile_update' ) );
             
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+            
+            add_filter( 'posts_where', array( $this, 'subscribers_can_only_see_own_files' ) );
+            
+            add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
             
         }
         
@@ -99,7 +104,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          *
          * Taken from bbPress
          *
-         * @access      private
+         * @access      public
          * @since       v1.0
          *
          * @param       string|array $template_names Template file(s) to search for, in order.
@@ -107,7 +112,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          * @param       bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
          * @return      string The template filename if one is located.
          */
-        private function pyis_locate_template( $template_names, $load = false, $require_once = true ) {
+        public static function pyis_locate_template( $template_names, $load = false, $require_once = true ) {
             
             // No file found yet
             $located = false;
@@ -365,7 +370,42 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
 
         }
+        
+        public function subscribers_can_only_see_own_files( $where ){
+            
+            global $current_user;
 
+            if ( is_user_logged_in() && $current_user->roles[0] == 'subscriber' ){
+                // we spreken over een ingelogde user
+                if ( isset( $_POST['action'] ) ){
+                    // library query
+                    if( $_POST['action'] == 'query-attachments' ){
+                        $where .= ' AND post_author=' . $current_user->data->ID;
+                    }
+                }
+            }
+
+            return $where;
+            
+        }
+        
+        public function subscribers_can_only_upload_images( $mime_types ) {
+            
+            global $current_user;
+            
+            if ( $current_user->roles[0] == 'subscriber' ) :
+            
+                $mime_types = array(
+                    'jpg|jpeg|jpe' => 'image/jpeg',
+                    'gif' => 'image/gif',
+                    'png' => 'image/png',
+                );
+            
+            endif;
+            
+            return $mime_types;
+            
+        }
         
         public function admin_enqueue_scripts() {
  
