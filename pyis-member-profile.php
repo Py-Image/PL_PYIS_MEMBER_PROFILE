@@ -327,7 +327,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                     </th>
 
                     <td>
-                        <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID ); ?>" style="max-width: 100px; max-height: 100px;" data-default="<?php echo get_avatar_url( $user->ID ); ?>" />
+                        <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID, array( 'size' => 100 ) ); ?>" style="max-width: 100px; max-height: 100px;" data-default="<?php echo get_avatar_url( $user->ID, array( 'size' => 100 ) ); ?>" />
                         <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-upload" value="<?php _e( 'Upload', $this->plugin_id ); ?>" />
                         <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-default" value="<?php _e( 'Reset to Default', $this->plugin_id ); ?>" />
                         <input type="hidden" class="button" name="pyis_profile_image_id" id="pyis-profile-image-id" value="<?php echo ! empty( $profile_pic ) ? $profile_pic : ''; ?>" />

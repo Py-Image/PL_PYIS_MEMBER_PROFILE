@@ -143,13 +143,19 @@ get_header();
                 
                 $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
                 
+                $profile_pic = ( $user->data !== 'add-new-user' ) ? get_user_meta( $user_id, 'pyis_profile_image', true ) : false;
+
+                if ( ! empty( $profile_pic ) ) {
+                    $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
+                }
+                
                 ?>
 
                 <tr>
                     
                     <td>
                         <a href="/members/<?php echo strtolower( rawurlencode( $user_data->user_login ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
-                            <?php echo get_avatar( $user_data->user_email ); ?>
+                            <img id="pyis-profile-image" class="alignleft" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user_data->user_email ); ?>" style="max-width: 96px; max-height: 196px;" />
                         </a>
                     </td>
                     <td>
