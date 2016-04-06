@@ -73,6 +73,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
             
+            add_action( 'wp_head', array( $this, 'template_meta' ) );
+            
             add_action( 'customize_register', array( $this, 'customize_register' ) );
             
             add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
@@ -195,6 +197,30 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
             
             return $title;
+            
+        }
+        
+        public function template_meta() {
+            
+            // Yoast SEO handles this if installed
+            if ( ! class_exists( 'WPSEO_Frontend' ) ) {
+            
+                if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) { ?>
+                    <meta property="og:title" content="<?php _e( 'Member Directory', $plugin->id ); ?>">
+                    <meta property="twitter:title" content="<?php _e( 'Member Directory', $plugin->id ); ?>">
+                <?php }
+                else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+
+                    // Made available before wp_head() is called
+                    global $user_data;
+                    ?>
+
+                    <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name ); ?>">
+                    <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name ); ?>">
+
+                <?php }
+                
+            }
             
         }
         
