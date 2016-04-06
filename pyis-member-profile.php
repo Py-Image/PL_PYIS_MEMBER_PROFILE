@@ -156,7 +156,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
             
             }
-            else if ( preg_match( '/\/members\/.+_.+(|\/)?json$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( '/\/members\/.+(|\/)?json$/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );
                 header( 'Content-Type: application/json' );
@@ -166,7 +166,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
                 
             }
-            else if ( preg_match( '/\/members\/.+_.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );
                 
@@ -185,7 +185,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
                 return __( 'Member Directory', $plugin->id );
             }
-            else if ( preg_match( '/\/members\/.+_.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
     
                 // Made available before wp_head() is called
                 global $user_data;

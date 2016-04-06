@@ -148,12 +148,12 @@ get_header();
                 <tr>
                     
                     <td>
-                        <a href="/members/<?php echo strtolower( rawurlencode( $user_data->first_name ) ); ?>_<?php echo strtolower( rawurlencode( $user_data->last_name ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
+                        <a href="/members/<?php echo strtolower( rawurlencode( $user_data->user_login ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
                             <?php echo get_avatar( $user_data->user_email ); ?>
                         </a>
                     </td>
                     <td>
-                        <a href="/members/<?php echo strtolower( rawurlencode( $user_data->first_name ) ); ?>_<?php echo strtolower( rawurlencode( $user_data->last_name ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
+                        <a href="/members/<?php echo strtolower( rawurlencode( $user_data->user_login ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
                             <?php echo "$user_data->last_name, $user_data->first_name"; ?>
                         </a>
                     </td>
