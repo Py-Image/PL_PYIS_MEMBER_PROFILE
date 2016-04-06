@@ -182,6 +182,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Generate <title> tag based on the injected Page Template
+         *
+         * @access      public
+         * @since       1.0
+         * @return      string $title <title> Text
+         */
         public function template_title( $title, $sep, $seplocation ) {
             
             if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
@@ -200,6 +207,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Generate <meta> tag based on the injected Page Template
+         *
+         * @access      public
+         * @since       1.0
+         * @return      void
+         */
         public function template_meta() {
             
             // Yoast SEO handles this if installed
@@ -224,6 +238,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Add Customizer Control to choose the Course for Member Listing Metadata.
+         *
+         * @access      public
+         * @since       1.0
+         * @return      void
+         */
         public function customize_register( $wp_customize ) {
 
             // General Theme Options
@@ -264,7 +285,14 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             ) ) );
             
         }
-                       
+
+        /**
+         * Add Contact methods to the User Profile screen
+         *
+         * @access      public
+         * @since       1.0
+         * @return      Array $profile_fields All Contact Method Fields
+         */
         public function add_contact_methods( $profile_fields ) {
             
             $profile_fields['linkedin'] = 'LinkedIn';
