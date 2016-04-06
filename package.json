@@ -4,6 +4,11 @@
     "devDependencies": {
         "grunt": "*",
         "matchdep": "*",
+        "grunt-sass": "*",
+        "grunt-autoprefixer": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-notify": "*",
         "grunt-po2mo": "*",
         "grunt-wp-i18n": "*"
     }

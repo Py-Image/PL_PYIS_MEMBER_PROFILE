@@ -79,6 +79,15 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
             
+            add_action( 'show_user_profile', array( $this, 'add_profile_fields' ) );
+            add_action( 'edit_user_profile', array( $this, 'add_profile_fields' ) );
+            add_action( 'user_new_form', array( $this, 'add_profile_fields' ) );
+            
+            add_action( 'profile_update', array( $this, 'profile_update' ) );
+            add_action( 'user_register', array( $this, 'profile_update' ) );
+            
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+            
         }
         
         /**
@@ -301,6 +310,70 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             return $profile_fields;
             
         }
+        
+        public function add_profile_fields( $user ) {
+ 
+            $profile_pic = ( $user !== 'add-new-user' ) ? get_user_meta( $user->ID, 'pyis_profile_image', true ) : false;
+
+            if ( ! empty( $profile_pic ) ) {
+                $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
+            } 
+            ?>
+
+            <table class="form-table pyis-profile-upload-options">
+                <tr>
+                    <th>
+                        <label for="image"><?php _e( 'PyImageSearch Profile Avatar', $this->plugin_id ) ?></label>
+                    </th>
+
+                    <td>
+                        <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID ); ?>" style="max-width: 100px; max-height: 100px;" data-default="<?php echo get_avatar_url( $user->ID ); ?>" />
+                        <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-upload" value="<?php _e( 'Upload', $this->plugin_id ); ?>" />
+                        <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-default" value="<?php _e( 'Reset to Default', $this->plugin_id ); ?>" />
+                        <input type="hidden" class="button" name="pyis_profile_image_id" id="pyis-profile-image-id" value="<?php echo ! empty( $profile_pic ) ? $profile_pic : ''; ?>" />
+                        <p class="description"><?php
+                            if ( IS_PROFILE_PAGE ) {
+                                /* translators: %s: Gravatar URL */
+                                $description = sprintf( __( 'You can set your Avatar here, or via <a href="%s">Gravatar</a>.' ),
+                                    __( '//en.gravatar.com/' )
+                                );
+                            } else {
+                                $description = '';
+                            }
+
+                            /**
+                             * Filter the user profile picture description displayed under the Gravatar.
+                             *
+                             * @since 1.0
+                             *
+                             * @param string $description The description that will be printed.
+                             */
+                            echo apply_filters( 'pyis_profile_picture_description', $description );
+                        ?></p>
+                    </td>
+                </tr>
+            </table>
+
+        <?php                
+        }
+        
+        function profile_update( $user_id ) {
+ 
+            if ( current_user_can( 'edit_users' ) ) {
+                $profile_pic = empty( $_POST['pyis_profile_image_id'] ) ? '' : $_POST['pyis_profile_image_id'];
+                update_user_meta( $user_id, 'pyis_profile_image', $profile_pic );
+            }
+
+        }
+
+        
+        public function admin_enqueue_scripts() {
+ 
+            wp_enqueue_media();
+            wp_enqueue_script( 'pyis-admin-uploader', plugins_url( '/admin.js', __FILE__ ), array( 'jquery' ), false, true );
+            
+        }
+
 
         /**
          * Internationalization
@@ -350,7 +423,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             ?>
 
             <div id="message" class="error notice is-dismissible">
-                <?php _e( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "//www.memberpress.com/" target="_blank">MemberPress</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ); ?>
+                <?php echo sprintf( __( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "%s" target="_blank">MemberPress</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ), '//www.memberpress.com/' ); ?>
             </div>
 
             <?php
@@ -367,7 +440,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             ?>
 
             <div id="message" class="error notice is-dismissible">
-                <?php _e( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "//www.learndash.com/" target="_blank">LearnDash</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ); ?>
+                <?php echo sprintf( __( '<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires <strong><a href = "%s" target="_blank">LearnDash</a></strong> to be Active!</p>', PyisMemberProfile::$plugin_id ), '//www.learndash.com/' ); ?>
             </div>
 
             <?php
