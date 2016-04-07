@@ -78,6 +78,7 @@ module.exports = function (grunt) {
                     'script.js': [
                         // Vendor files
                         'build/vendor/js/jquery.cropit.js',
+                        'build/vendor/js/pica.min.js',
                         'build/vendor/js/foundation/foundation.core.js',
                         'build/vendor/js/foundation/foundation.util.keyboard.js',
                         'build/vendor/js/foundation/foundation.util.box.js',
