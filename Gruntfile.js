@@ -77,7 +77,14 @@ module.exports = function (grunt) {
                 files: {
                     'script.js': [
                         // Vendor files
-
+                        'build/vendor/js/jquery.cropit.js',
+                        'build/vendor/js/foundation/foundation.core.js',
+                        'build/vendor/js/foundation/foundation.util.keyboard.js',
+                        'build/vendor/js/foundation/foundation.util.box.js',
+                        'build/vendor/js/foundation/foundation.util.triggers.js',
+                        'build/vendor/js/foundation/foundation.util.mediaquery.js',
+                        'build/vendor/js/foundation/foundation.util.motion.js',
+                        'build/vendor/js/foundation/foundation.reveal.js',
                         // Theme scripts
                         'build/js/**/*.js',
                         '!build/js/admin/**/*.js',

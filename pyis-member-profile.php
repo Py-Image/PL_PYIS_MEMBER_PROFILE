@@ -89,6 +89,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
             
+            add_action( 'wp_footer', array( $this, 'member_crop_modal' ) );
+            
             add_filter( 'posts_where', array( $this, 'subscribers_can_only_see_own_files' ) );
             
             add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
@@ -410,7 +412,21 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         public function admin_enqueue_scripts() {
  
             wp_enqueue_media();
-            wp_enqueue_script( 'pyis-admin-uploader', plugins_url( '/admin.js', __FILE__ ), array( 'jquery' ), false, true );
+            wp_enqueue_script( 'pyis-admin-uploader', plugins_url( '/script.js', __FILE__ ), array( 'jquery' ), false, true );
+            wp_enqueue_style( 'pyis-style', plugins_url( '/style.css', __FILE__ ) );
+            
+        }
+        
+        public function member_crop_modal() {
+            
+            global $current_user;
+            global $user_data;
+            
+            if ( $current_user->data->ID == $user_data->data->ID ) {
+                
+                include( $this->pyis_locate_template( 'member-modal.php' ) );
+                
+            }
             
         }
 
@@ -519,3 +535,11 @@ function PyisMemberProfile_load() {
     }
     
 }
+
+add_action( 'admin_init', function() {
+    $role = get_role( 'subscriber' );
+    $role->remove_cap( 'edit_published_posts' );
+    $role->remove_cap( 'upload_files' );
+    $role->remove_cap( 'publish_posts' );
+    $role->remove_cap( 'delete_published_posts' );
+});

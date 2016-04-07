@@ -1,0 +1,71 @@
+#image-cropper {
+
+    .cropit-preview {
+        width: 150px;
+        height: 150px;
+        zoom: 1;
+        border: 1px solid #ccc;
+        background-color: #f8f8f8;
+        margin: 0 auto;
+
+        img {
+            max-width: initial;
+        }
+
+        &.cropit-image-loaded {
+            .cropit-preview-image-container {
+                cursor: move;
+            }
+        }
+
+    }
+
+    .cropit-preview-background {
+        display: none;
+    }
+
+    .controls-wrapper {
+        text-align: center;
+        margin-top: 0.75em;
+        color: #000;
+
+        .rotate-controls {
+            
+            text-align: right;
+
+            * {
+                vertical-align: middle;
+                margin-right: 1em;
+            }
+
+        }
+
+        .zoom-control {
+            
+            text-align: left;
+            
+            * {
+                vertical-align: middle;
+            }
+            
+            .small-icon {
+                font-size: 0.75em;
+            }
+            .large-icon {
+                font-size: 1.25em;
+            }
+        }
+
+    }
+    
+    .cropit-save-image, .cropit-select-image {
+        display: block;
+        width: 100%;
+        margin-bottom: 1em;
+    }
+    
+    input.cropit-image-input {
+        visibility: hidden;
+    }
+
+}

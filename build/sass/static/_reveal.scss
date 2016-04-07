@@ -1,0 +1,35 @@
+body, html {
+    height: 100%;
+}
+
+.foundation.reveal {
+    
+    z-index: 1031;
+    padding: 1.5em;
+    padding-top: 1em;
+    
+    &:focus {
+        outline: none;
+        box-shadow: 0;
+    }
+    
+    .close-button {
+        
+        background: transparent;
+        border: 0;
+        
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        
+        &:first-of-type {
+            margin-top: 0;
+        }
+        
+    }
+    
+}
+
+.reveal-overlay {
+    z-index: 1030;
+}
