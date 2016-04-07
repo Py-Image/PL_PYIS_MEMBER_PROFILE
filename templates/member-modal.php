@@ -21,7 +21,7 @@
         
         <div class="x-column x-sm x-1-2">
             <?php echo apply_filters( 'the_content', __( "You can rotate the image using the buttons below.\nTo crop the image: zoom in using the below slider, and then click and drag over the image.", PyisMemberProfile::$plugin_id ) ); ?>
-            <input type="file" class="cropit-image-input" />
+            <input type="file" class="cropit-image-input" multiple="false" />
             <button class="cropit-select-image"><?php _e( 'Upload', PyisMemberProfile::$plugin_id ); ?></button>
             <button class="cropit-save-image" data-close><?php _e( 'Done', PyisMemberProfile::$plugin_id ); ?></button>
         </div>

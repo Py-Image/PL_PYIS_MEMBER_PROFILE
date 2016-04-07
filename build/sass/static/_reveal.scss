@@ -2,6 +2,18 @@ body, html {
     height: 100%;
 }
 
+.open-modal-container {
+    text-align: center;
+}
+
+#open-modal-link {
+    
+    &:hover {
+        cursor: pointer;
+    }
+    
+}
+
 .foundation.reveal {
     
     z-index: 1031;

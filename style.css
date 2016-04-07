@@ -82,6 +82,12 @@ body.is-reveal-open {
 body, html {
   height: 100%; }
 
+.open-modal-container {
+  text-align: center; }
+
+#open-modal-link:hover {
+  cursor: pointer; }
+
 .foundation.reveal {
   z-index: 1031;
   padding: 1.5em;
@@ -138,4 +144,8 @@ body, html {
 
 #image-cropper input.cropit-image-input {
   visibility: hidden; }
+
+.wp-editor-wrap {
+  margin-top: -2em;
+  margin-bottom: 2em; }
 /*# sourceMappingURL=style.css.map */

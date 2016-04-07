@@ -69,6 +69,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         private function hooks() {
             
+            //register_activation_hook( __FILE__, array( $this, 'create_avatars_directory' ) );
+            //add_action( 'admin_init', array( $this, 'create_avatars_directory' ) );
+            
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
@@ -94,6 +97,18 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'posts_where', array( $this, 'subscribers_can_only_see_own_files' ) );
             
             add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
+            
+        }
+        
+        public static function create_avatars_directory() {
+                
+            $uploads = wp_upload_dir();
+            
+            $pyis_avatars = apply_filters( 'pyis_avatars_directory', $uploads['basedir'] . '/pyis-avatars' );
+
+            if ( ! is_dir( $pyis_avatars ) ) :
+                wp_mkdir_p( $pyis_avatars );
+            endif;
             
         }
         
@@ -151,6 +166,23 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 load_template( $located, $require_once );
 
             return $located;
+            
+        }
+        
+        public static function pyis_data_uri_decode( $data_uri, $output_file ) {
+            
+            if ( $data_uri == '' ) {
+                return false;
+            }
+            
+            $file_stream = fopen( $output_file, "wb" );
+            
+            $data = explode( ',', $data_uri );
+            
+            fwrite( $file_stream, base64_decode( $data[1] ) );
+            fclose( $file_stream );
+            
+            return $output_file;
             
         }
         
@@ -536,10 +568,4 @@ function PyisMemberProfile_load() {
     
 }
 
-add_action( 'admin_init', function() {
-    $role = get_role( 'subscriber' );
-    $role->remove_cap( 'edit_published_posts' );
-    $role->remove_cap( 'upload_files' );
-    $role->remove_cap( 'publish_posts' );
-    $role->remove_cap( 'delete_published_posts' );
-});
+register_activation_hook( __FILE__, array( 'PyisMemberProfile', 'create_avatars_directory' ) );

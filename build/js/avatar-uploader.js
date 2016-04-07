@@ -61,6 +61,8 @@ jQuery( document ).ready( function( $ ) {
                 var picaImageData = zoomedCanvas.toDataURL();
                 
                 $( '#pyis-profile-image' ).attr( 'src', picaImageData );
+                $( '#pyis_profile_image_data' ).val( picaImageData );
+                
             } );
             
         } );
