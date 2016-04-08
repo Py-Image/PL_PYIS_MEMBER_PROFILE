@@ -30,7 +30,7 @@ if (
     $pyis_avatars = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
     
     // Pica always converts the images to .PNGs.
-    $image_path = PyisMemberProfile::pyis_data_uri_decode( $_POST['pyis_profile_image'], trailingslashit( $pyis_avatars ) . $user_data->user_login . '.png' );
+    $image_path = PyisMemberProfile::pyis_data_uri_decode( $_POST['pyis_profile_image'], trailingslashit( $pyis_avatars ) . $pyis_user_data->user_login . '.png' );
     
     if ( $image_path !== false ) {
     
@@ -78,7 +78,7 @@ if (
     $update_user = wp_update_user( $insert_user_data );
     
     // Ensure Global User Data is up-to-date
-    $user_data = get_userdata( $user_id );
+    $pyis_user_data = get_userdata( $user_id );
 
 }
 else {
@@ -108,13 +108,13 @@ else {
                     </div>
 
                     <label>
-                        <input type="text" name="first_name" value="<?php echo $user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
+                        <input type="text" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
 
                     <?php 
 
                     $course_id = get_theme_mod( 'pyis_course', 0 );
 
-                    $register_date = new DateTime( $user_data->user_registered );
+                    $register_date = new DateTime( $pyis_user_data->user_registered );
                     $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
                     $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
@@ -163,7 +163,7 @@ else {
                     <input type="text" name="twitter" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" />
                     
                     <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <input type="text" name="user_url" value="<?php echo $user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />
+                    <input type="text" name="user_url" value="<?php echo $pyis_user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />
 
                 </div>
                 

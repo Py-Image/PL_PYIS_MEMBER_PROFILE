@@ -84,8 +84,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
             
-            add_action( 'profile_update', array( $this, 'profile_update' ) );
-            add_action( 'user_register', array( $this, 'profile_update' ) );
+            add_filter( 'user_has_cap', array( $this, 'allow_subscribers_to_upload_avatars' ), 10, 3 );
             
             add_action( 'init', array( $this, 'register_styles_scripts' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
@@ -257,9 +256,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
     
                 // Made available before wp_head() is called
-                global $user_data;
+                global $pyis_user_data;
 
-                return sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name );
+                return sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name );
                 
             }
             
@@ -286,11 +285,11 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
 
                     // Made available before wp_head() is called
-                    global $user_data;
+                    global $pyis_user_data;
                     ?>
 
-                    <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name ); ?>">
-                    <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $user_data->first_name . ' ' . $user_data->last_name ); ?>">
+                    <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
+                    <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
 
                 <?php }
                 
@@ -420,6 +419,33 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         }
         
         /**
+         * Give Subscribers the capabilty to upload files only on their profile page
+         * 
+         * @param  array    $user_caps The User's Capabilities
+         * @param  array    $req_cap   The required Capability
+         * @param  array    $args      The Requested Capability, along with User and Object information
+         * @return array    Temporarily modified Capabilities for the User
+         */
+        public function allow_subscribers_to_upload_avatars( $user_caps, $req_cap, $args ) {
+            
+            if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
+            
+                global $current_user;
+                global $pyis_user_data;
+
+                if ( $current_user->data->ID == $pyis_user_data->data->ID ) {
+                    
+                    $user_caps['upload_files'] = true;
+                    
+                }
+                
+            }
+            
+            return $user_caps;
+            
+        }
+        
+        /**
          * Ensure that Subscribers can only upload Images
          * 
          * @access public
@@ -503,9 +529,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
             
                 global $current_user;
-                global $user_data;
+                global $pyis_user_data;
 
-                if ( $current_user->data->ID == $user_data->data->ID ) {
+                if ( $current_user->data->ID == $pyis_user_data->data->ID ) {
 
                     include( $this->pyis_locate_template( 'member-modal.php' ) );
 

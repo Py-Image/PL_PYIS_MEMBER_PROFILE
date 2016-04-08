@@ -25,13 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     
                 </div>
 
-                <h3 style="margin-top: 0;"><?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; ?></h3>
+                <h3 style="margin-top: 0;"><?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; ?></h3>
 
                 <?php 
 
                 $course_id = get_theme_mod( 'pyis_course', 0 );
 
-                $register_date = new DateTime( $user_data->user_registered );
+                $register_date = new DateTime( $pyis_user_data->user_registered );
                 $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
                 $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
