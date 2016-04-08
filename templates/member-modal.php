@@ -1,5 +1,18 @@
-<div class="foundation reveal" id="image-upload-modal" data-reveal data-v-offset="0">
-    <h3><?php _e( 'Upload a New Avatar', PyisMemberProfile::$plugin_id ); ?></h3>
+<?php
+/**
+ * Member Avatar Upload Modal
+ *
+ * @since 1.0
+ * @package pyis-member-profile
+ */
+
+// Don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die;
+} ?>
+
+<div class="foundation reveal" id="pyis-image-upload-modal" data-reveal data-v-offset="0">
+    <h3><?php echo apply_filters( 'pyis_member_avatar_title', __( 'Upload a New Avatar', PyisMemberProfile::$plugin_id ) ); ?></h3>
 
     <div id="image-cropper" class="x-container">
         
@@ -20,7 +33,9 @@
         </div>
         
         <div class="x-column x-sm x-1-2">
-            <?php echo apply_filters( 'the_content', __( "You can rotate the image using the buttons below.\nTo crop the image: zoom in using the below slider, and then click and drag over the image.", PyisMemberProfile::$plugin_id ) ); ?>
+            <?php 
+            $cropping_instructions = apply_filters( 'pyis_member_avatar_cropping', __( "You can rotate the image using the buttons below.\nTo crop the image: zoom in using the below slider and then click and drag over the image.", PyisMemberProfile::$plugin_id ) );
+            echo apply_filters( 'the_content', $cropping_instructions ); ?>
             <input type="file" class="cropit-image-input" multiple="false" />
             <button class="cropit-select-image"><?php _e( 'Upload', PyisMemberProfile::$plugin_id ); ?></button>
             <button class="cropit-save-image" data-close><?php _e( 'Done', PyisMemberProfile::$plugin_id ); ?></button>

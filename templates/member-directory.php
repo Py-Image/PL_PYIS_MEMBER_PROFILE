@@ -24,7 +24,7 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 get_header();
 ?>
 
-<div class="x-container max width offset">
+<div class="pyis-member-directory-container x-container max width offset">
     <div class="full-width" role="main">
         
         <form method="GET" class="form-search x-container max width offset">
@@ -181,7 +181,7 @@ get_header();
         
         <?php else :
         
-        _e( 'No Members Found Matching Your Request', PyisMemberProfile::$plugin_id );
+        echo apply_filters( 'pyis_member_directory_nothing_found', __( 'No Members Found Matching Your Request', PyisMemberProfile::$plugin_id ) );
 
         endif; ?>
         

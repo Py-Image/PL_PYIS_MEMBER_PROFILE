@@ -82,7 +82,7 @@ else {
 
 ?>
 
-<div class="x-container max width offset entry-wrap">
+<div class="pyis-member-edit-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
         
         <?php 
@@ -92,13 +92,13 @@ else {
             && current_user_can( 'upload_files', 0 )
         ) : ?>
         
-        <div class="pyis-success-message">
-            <?php _e( 'Submission Successful', PyisMemberProfile::$plugin_id ); ?>
-        </div>
+            <div class="pyis-success-message">
+                <?php echo apply_filters( 'pyis_member_submission_success', __( 'Submission Successful', PyisMemberProfile::$plugin_id ) ); ?>
+            </div>
         
         <?php endif; ?>
             
-        <form id="pyis_profile_edit" method="post" enctype="multipart/form-data">
+        <form id="pyis-profile-edit-form" method="post" enctype="multipart/form-data">
             <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
 
             <div class="pyis-profile-top x-column x-sm x-1-1">
@@ -108,7 +108,7 @@ else {
                     <?php echo get_avatar( $user_id, 150, false, false, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
                     <input type="hidden" name="pyis_profile_image" id="pyis_profile_image_data" />
 
-                    <p class="open-modal-container"><a id="open-modal-link" data-open="image-upload-modal">Upload a New Avatar</a></p>
+                    <p class="open-modal-container"><a id="open-modal-link" data-open="pyis-image-upload-modal">Upload a New Avatar</a></p>
 
                 </div>
 
@@ -179,7 +179,7 @@ else {
             <input id="pyis_profile_submit" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
                 
             <div class="pyis-error-message" style="display: none;">
-                <?php _e( 'Submission Error', PyisMemberProfile::$plugin_id ); ?>
+                <?php echo apply_filters( 'pyis_member_submission_error', __( 'Submission Error', PyisMemberProfile::$plugin_id ) ); ?>
             </div>
 
         </form>

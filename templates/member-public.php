@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 } ?>
 
-<div class="x-container max width offset entry-wrap">
+<div class="pyis-member-profile-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
             
         <div class="pyis-profile-top x-column x-sm x-1-1">

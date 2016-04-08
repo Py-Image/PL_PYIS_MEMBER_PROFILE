@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         <!-- Pushes content more toward center -->
         <div class="x-container max width offset">
-            <?php _e( 'No Member Found', PyisMemberProfile::$plugin_id ); ?>
+            <?php echo apply_filters( 'pyis_member_profile_nothing_found', __( 'No Member Found For Your Request', PyisMemberProfile::$plugin_id ) ); ?>
         </div>
         
     </div>

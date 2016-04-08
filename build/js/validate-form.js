@@ -2,7 +2,7 @@ jQuery( function( $ ) {
     
     $( document ).ready( function() {
     
-        var $form = $( '#pyis_profile_edit' );
+        var $form = $( '#pyis-profile-edit-form' );
         $form[0].noValidate = true;
 
         if ( $form.length > 0 ) {

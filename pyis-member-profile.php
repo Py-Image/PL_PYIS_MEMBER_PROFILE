@@ -15,7 +15,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
     /**
      * Main PyisMemberProfile class
      *
-     * @since       1.0.0
+     * @since       1.0
      */
     class PyisMemberProfile {
 
@@ -401,9 +401,10 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         /**
          * Save Skills Field from the Backend Form
          * 
-         * @param integer $user_id User ID
          * @access public
          * @since 1.0
+         * @param integer $user_id User ID
+         * @return void
          */
         public function save_skills_field( $user_id ) {
             
@@ -417,7 +418,14 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
-        public function visual_editor_forced_on_frontend( $editors ) {
+        /**
+         * Force instances of wp_editor() the frontend to default to "Visual"
+         * 
+         * @access public
+         * @since 1.0
+         * @return string   Selected Tab
+         */
+        public function visual_editor_forced_on_frontend() {
             
             // Check if its our page
             if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
