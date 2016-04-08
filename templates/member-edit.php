@@ -9,12 +9,7 @@
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
     die;
-} 
-
-// Force frontend instances of wp_editor() to default to the Visual Editor
-add_filter( 'wp_default_editor', function() {
-    return 'tinymce';
-} );
+}
 
 if ( 
 	isset( $_POST['pyis_profile_nonce'] ) 
@@ -90,7 +85,7 @@ else {
 <div class="x-container max width offset entry-wrap">
     <div class="full-width" role="main">
             
-        <form id="featured_upload" method="post" enctype="multipart/form-data">
+        <form id="pyis_profile_edit" method="post" enctype="multipart/form-data">
             <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
 
             <div class="pyis-profile-top x-column x-sm x-1-1">
@@ -155,13 +150,13 @@ else {
                 ) ); ?>
 
                 <h6><?php _e( 'LinkedIn', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="linkedin" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" />
+                <input type="text" name="linkedin" class="pyis-validate-url" data-validate="linkedin.com" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
 
                 <h6><?php _e( 'GitHub', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="github" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" />
+                <input type="text" name="github" class="pyis-validate-url" data-validate="github.com" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
 
                 <h6><?php _e( 'Twitter', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="twitter" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" />
+                <input type="text" name="twitter" class="pyis-validate-url" data-validate="twitter.com" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
 
                 <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
                 <input type="text" name="user_url" value="<?php echo $pyis_user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />

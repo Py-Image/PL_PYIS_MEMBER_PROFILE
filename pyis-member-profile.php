@@ -91,6 +91,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'edit_user_profile_update', array( $this, 'save_skills_field' ) );
             add_action( 'profile_update', array( $this, 'save_skills_field' ) );
             add_action( 'user_register', array( $this, 'save_skills_field' ) );
+
+            add_filter( 'wp_default_editor', array( $this, 'visual_editor_forced_on_frontend' ) );
             
             add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
             add_filter( 'user_has_cap', array( $this, 'allow_subscribers_to_upload_avatars' ), 10, 3 );
@@ -410,6 +412,17 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 
                 $skills = empty( $_POST['pyis_skills'] ) ? '' : $_POST['pyis_skills'];
                 update_user_meta( $user_id, 'pyis_skills', $skills );
+                
+            }
+            
+        }
+        
+        public function visual_editor_forced_on_frontend( $editors ) {
+            
+            // Check if its our page
+            if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
+            
+                return 'tinymce';
                 
             }
             
