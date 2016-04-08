@@ -136,18 +136,13 @@ get_header();
                 </thead>
 
             <?php foreach ( $user_query->results as $user ) :
-
-                $user_data = get_userdata( $user->data->ID );
                 
-                $course_progress = get_user_meta( $user->data->ID, '_sfwd-course_progress', true );
+                $user_id = $user->data->ID;
+                $user_data = get_userdata( $user_id );
+                
+                $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
                 
                 $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
-                
-                $profile_pic = ( $user->data !== 'add-new-user' ) ? get_user_meta( $user_id, 'pyis_profile_image', true ) : false;
-
-                if ( ! empty( $profile_pic ) ) {
-                    $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
-                }
                 
                 ?>
 
@@ -155,7 +150,7 @@ get_header();
                     
                     <td>
                         <a href="/members/<?php echo strtolower( rawurlencode( $user_data->user_login ) ); ?>" title="<?php echo $user_data->first_name; ?> <?php echo $user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
-                            <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user_data->user_email ); ?>" style="max-width: 96px; max-height: 196px;" />
+                            <?php echo get_avatar( $user_id ); ?>
                         </a>
                     </td>
                     <td>
@@ -164,7 +159,7 @@ get_header();
                         </a>
                     </td>
                     <td><?php echo sprintf( '%g%%', number_format( $course_progress, 2, '.', ',' ) ); ?></td>
-                    <td><?php echo ( learndash_course_completed( $user->data->ID, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) ; ?></td>
+                    <td><?php echo ( learndash_course_completed( $user_id, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) ; ?></td>
 
                 </tr>
 

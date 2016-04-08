@@ -29,7 +29,7 @@ if (
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
     
     $uploads = wp_upload_dir();
-    $pyis_avatars = apply_filters( 'pyis_avatars_directory', $uploads['basedir'] . '/pyis-avatars' );
+    $pyis_avatars = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
     
     // Pica always converts the images to .PNGs.
     $image_path = PyisMemberProfile::pyis_data_uri_decode( $_POST['pyis_profile_image'], trailingslashit( $pyis_avatars ) . $user_data->user_login . '.png' );
@@ -95,22 +95,14 @@ else {
         <!-- Pushes content more toward center -->
         <div class="x-container max width offset">
             
-            <?php
-                $profile_pic = ( $user->data !== 'add-new-user' ) ? get_user_meta( $user_id, 'pyis_profile_image', true ) : false;
-
-                if ( ! empty( $profile_pic ) ) {
-                    $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
-                }
-            ?>
-            
             <form id="featured_upload" method="post" enctype="multipart/form-data">
                 <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
             
                 <div class="pyis-profile-top x-column x-sm x-1-1">
 
                     <div class="pyis-avatar-container alignleft">
-
-                        <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID, array( 'size' => 150 ) ); ?>" style="max-width: 150px; max-height: 150px;" />
+                        
+                        <?php echo get_avatar( $user_id, 150, false, false, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
                         <input type="hidden" name="pyis_profile_image" id="pyis_profile_image_data" />
 
                         <p class="open-modal-container"><a id="open-modal-link" data-open="image-upload-modal">Upload a New Avatar</a></p>

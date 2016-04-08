@@ -21,15 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 
                 <div class="pyis-avatar-container alignleft">
 
-                    <?php
-                        $profile_pic = ( $user->data !== 'add-new-user' ) ? get_user_meta( $user_id, 'pyis_profile_image', true ) : false;
-
-                        if ( ! empty( $profile_pic ) ) {
-                            $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
-                        }
-                    ?>
-
-                    <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID, array( 'size' => 150 ) ); ?>" style="max-width: 150px; max-height: 150px;" />
+                    <?php echo get_avatar( $user_id, 150, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
                     
                 </div>
 

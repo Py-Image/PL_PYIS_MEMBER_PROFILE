@@ -69,9 +69,6 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         private function hooks() {
             
-            //register_activation_hook( __FILE__, array( $this, 'create_avatars_directory' ) );
-            //add_action( 'admin_init', array( $this, 'create_avatars_directory' ) );
-            
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
@@ -82,9 +79,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
             
-            add_action( 'show_user_profile', array( $this, 'add_profile_fields' ) );
-            add_action( 'edit_user_profile', array( $this, 'add_profile_fields' ) );
-            add_action( 'user_new_form', array( $this, 'add_profile_fields' ) );
+            add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
             
             add_action( 'profile_update', array( $this, 'profile_update' ) );
             add_action( 'user_register', array( $this, 'profile_update' ) );
@@ -104,7 +99,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 
             $uploads = wp_upload_dir();
             
-            $pyis_avatars = apply_filters( 'pyis_avatars_directory', $uploads['basedir'] . '/pyis-avatars' );
+            $pyis_avatars = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
 
             if ( ! is_dir( $pyis_avatars ) ) :
                 wp_mkdir_p( $pyis_avatars );
@@ -350,59 +345,48 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
-        public function add_profile_fields( $user ) {
- 
-            $profile_pic = ( $user !== 'add-new-user' ) ? get_user_meta( $user->ID, 'pyis_profile_image', true ) : false;
+        public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
+            
+            $user = false;
 
-            if ( ! empty( $profile_pic ) ) {
-                $image = wp_get_attachment_image_src( $profile_pic, 'thumbnail' );
-            } 
-            ?>
+            if ( is_numeric( $id_or_email ) ) {
 
-            <table class="form-table pyis-profile-upload-options">
-                <tr>
-                    <th>
-                        <label for="image"><?php _e( 'PyImageSearch Profile Avatar', $this->plugin_id ) ?></label>
-                    </th>
+                $id = (int) $id_or_email;
+                $user = get_user_by( 'id' , $id );
 
-                    <td>
-                        <img id="pyis-profile-image" src="<?php echo ! empty( $profile_pic ) ? $image[0] : get_avatar_url( $user->ID, array( 'size' => 100 ) ); ?>" style="max-width: 100px; max-height: 100px;" data-default="<?php echo get_avatar_url( $user->ID, array( 'size' => 100 ) ); ?>" />
-                        <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-upload" value="<?php _e( 'Upload', $this->plugin_id ); ?>" />
-                        <input type="button" data-id="pyis-profile-image-id" data-src="pyis-profile-image" class="button" id="pyis-profile-image-default" value="<?php _e( 'Reset to Default', $this->plugin_id ); ?>" />
-                        <input type="hidden" class="button" name="pyis_profile_image_id" id="pyis-profile-image-id" value="<?php echo ! empty( $profile_pic ) ? $profile_pic : ''; ?>" />
-                        <p class="description"><?php
-                            if ( IS_PROFILE_PAGE ) {
-                                /* translators: %s: Gravatar URL */
-                                $description = sprintf( __( 'You can set your Avatar here, or via <a href="%s">Gravatar</a>.' ),
-                                    __( '//en.gravatar.com/' )
-                                );
-                            } else {
-                                $description = '';
-                            }
+            }
+            elseif ( is_object( $id_or_email ) ) {
 
-                            /**
-                             * Filter the user profile picture description displayed under the Gravatar.
-                             *
-                             * @since 1.0
-                             *
-                             * @param string $description The description that will be printed.
-                             */
-                            echo apply_filters( 'pyis_profile_picture_description', $description );
-                        ?></p>
-                    </td>
-                </tr>
-            </table>
-
-        <?php                
-        }
-        
-        function profile_update( $user_id ) {
- 
-            if ( current_user_can( 'edit_users' ) ) {
-                $profile_pic = empty( $_POST['pyis_profile_image_id'] ) ? '' : $_POST['pyis_profile_image_id'];
-                update_user_meta( $user_id, 'pyis_profile_image', $profile_pic );
+            if ( ! empty( $id_or_email->user_id ) ) {
+                $id = (int) $id_or_email->user_id;
+                $user = get_user_by( 'id' , $id );
             }
 
+            }
+            else {
+                $user = get_user_by( 'email', $id_or_email );	
+            }
+
+            if ( $user && is_object( $user ) ) {
+                
+                $user_login = $user->data->user_login;
+                $uploads = wp_upload_dir();
+                $pyis_avatars_directory = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
+                
+                // Server Path
+                $user_avatar = trailingslashit( $pyis_avatars_directory ) . $user_login . '.png';
+                
+                // Web-accessable path
+                $user_avatar_url = $uploads['baseurl'] . trailingslashit( apply_filters( 'pyis_avatars_directory', '/pyis-avatars' ) ) . $user_login . '.png';
+
+                if ( file_exists( $user_avatar ) ) {
+                    $avatar = "<img alt='{$alt}' src='{$user_avatar_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' {$args['extra_attr']} />";
+                }
+
+            }
+
+            return $avatar;
+            
         }
         
         public function subscribers_can_only_see_own_files( $where ){

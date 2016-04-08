@@ -60,6 +60,7 @@ jQuery( document ).ready( function( $ ) {
                 // Read resized image data
                 var picaImageData = zoomedCanvas.toDataURL();
                 
+                $( '#pyis-profile-image' ).removeAttr( 'srcset' );
                 $( '#pyis-profile-image' ).attr( 'src', picaImageData );
                 $( '#pyis_profile_image_data' ).val( picaImageData );
                 

@@ -26,12 +26,13 @@ $user = get_user_by( 'login', $user_name );
 $user_id = $user->data->ID;
 
 // Now that we have queried the User from the URL, we can access a lot more data
+// We're declaring it as Global so we can easily use this information for <title> and <meta> tags
 global $user_data;
 $user_data = get_userdata( $user_id );
 
 get_header();
 
-if ( ! $user || ( $user->roles[0] == 'administrator' ) ) :
+if ( $user->roles[0] == 'subscriber' ) :
 
     if ( get_current_user_id() == $user_id ) {
         include( PyisMemberProfile::pyis_locate_template( 'member-edit.php' ) );
