@@ -73,6 +73,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         private function hooks() {
             
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
+            
             add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
             add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
             
@@ -82,16 +83,23 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_filter( 'user_contactmethods', array( $this, 'add_contact_methods' ) );
             
-            add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
+            add_action( 'show_user_profile', array( $this, 'add_skills_field' ) );
+            add_action( 'edit_user_profile', array( $this, 'add_skills_field' ) );
+            add_action( 'user_new_form', array( $this, 'add_skills_field' ) );
             
+            add_action( 'personal_options_update', array( $this, 'save_skills_field' ) );
+            add_action( 'edit_user_profile_update', array( $this, 'save_skills_field' ) );
+            add_action( 'profile_update', array( $this, 'save_skills_field' ) );
+            add_action( 'user_register', array( $this, 'save_skills_field' ) );
+            
+            add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
             add_filter( 'user_has_cap', array( $this, 'allow_subscribers_to_upload_avatars' ), 10, 3 );
+            add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
             
             add_action( 'init', array( $this, 'register_styles_scripts' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
             
             add_action( 'wp_footer', array( $this, 'member_crop_modal' ) );
-            
-            add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
             
         }
         
@@ -347,6 +355,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
 
         /**
          * Add Contact methods to the User Profile screen
+         * These have a nice Filter, so we can quickly add them this way. Skills needs to be added the hard way.
          *
          * @access      public
          * @since       1.0
@@ -358,6 +367,51 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             $profile_fields['github'] = 'GitHub';
             
             return $profile_fields;
+            
+        }
+        
+        /**
+         * Add Skills Textarea to User Profile on the Backend. 
+         * This gives us another method to view/edit aside from the Frontend.
+         * 
+         * @param WP_User $user WP User Object
+         * @access public
+         * @since 1.0
+         */
+        public function add_skills_field( $user ) { ?>
+            
+            <h3><?php _e( 'PyImageSearch Member Profile', $this->plugin_id ); ?></h3>
+            
+            <table class="form-table">
+                <tr>
+                    <th>
+                        <label for="pyis_skills"><?php _e( 'Skills', $this->plugin_id ); ?></label>
+                    </th>
+                    <td>
+                        <textarea id="pyis_skills" name="pyis_skills" rows="5" cols="30"><?php echo get_user_meta( $user->data->ID, 'pyis_skills', true ); ?></textarea>
+                    </td>
+                </tr>
+            </table>
+
+        <?php    
+        }
+        
+        /**
+         * Save Skills Field from the Backend Form
+         * 
+         * @param integer $user_id User ID
+         * @access public
+         * @since 1.0
+         */
+        public function save_skills_field( $user_id ) {
+            
+            // WP temporarily grants any User "Edit Users" when they are viewing their own Profile
+            if ( current_user_can( 'edit_users' ) ) {
+                
+                $skills = empty( $_POST['pyis_skills'] ) ? '' : $_POST['pyis_skills'];
+                update_user_meta( $user_id, 'pyis_skills', $skills );
+                
+            }
             
         }
         
@@ -421,6 +475,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         /**
          * Give Subscribers the capabilty to upload files only on their profile page
          * 
+         * @access public
+         * @since 1.0
          * @param  array    $user_caps The User's Capabilities
          * @param  array    $req_cap   The required Capability
          * @param  array    $args      The Requested Capability, along with User and Object information

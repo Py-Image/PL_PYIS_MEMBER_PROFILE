@@ -11,67 +11,130 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 } ?>
 
-<div class="x-container max width offset">
+<div class="x-container max width offset entry-wrap">
     <div class="full-width" role="main">
-        
-        <!-- Pushes content more toward center -->
-        <div class="x-container max width offset">
             
-            <div class="pyis-profile-top x-column x-sm x-1-1">
-                
-                <div class="pyis-avatar-container alignleft">
+        <div class="pyis-profile-top x-column x-sm x-1-1">
 
-                    <?php echo get_avatar( $user_id, 150, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
+            <div class="pyis-avatar-container alignleft">
+
+                <?php echo get_avatar( $user_id, 150, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
+
+            </div>
+
+            <h3 style="margin-top: 0;"><?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; ?></h3>
+
+            <?php 
+
+            $course_id = get_theme_mod( 'pyis_course', 0 );
+
+            $register_date = new DateTime( $pyis_user_data->user_registered );
+            $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
+            $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
+
+            ?>
+
+            <?php echo apply_filters( 'the_content', 
+                sprintf( 
+                    __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
+                    $register_date->format( 'F jS, Y' ) 
+                ) 
+            ); ?>
+
+            <?php echo apply_filters( 'the_content', 
+                sprintf( 
+                    __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
+                    number_format( $course_progress, 2, '.', ',' )
+                ) 
+            ); ?>
+
+            <?php echo apply_filters( 'the_content', 
+                 sprintf( 
+                     __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
+                     ( learndash_course_completed( $user_id, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
+                 ) 
+            ); ?>
+
+        </div>
+
+        <div class="pyis-profile-bottom x-column x-sm x-1-1">
+
+            <?php if ( get_user_meta( $user_id, 'description', true ) !== '' ) : ?>
+                <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
+                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) ); ?>
+            <?php endif; ?>
+
+            <?php if ( get_user_meta( $user_id, 'pyis_skills', true ) !== '' ) : ?>
+                <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
+                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'pyis_skills', true ) ); ?>
+            <?php endif; ?>
+            
+            <?php
+            
+            $user_meta_urls = array(
+                'linkedin' => __( 'LinkedIn Profile', PyisMemberProfile::$plugin_id ),
+                'github' => __( 'GitHub Profile', PyisMemberProfile::$plugin_id ),
+                'twitter' => __( 'Twitter Profile', PyisMemberProfile::$plugin_id ),
+            );
+
+            foreach ( $user_meta_urls as $key => $label ) : 
+
+                if ( get_user_meta( $user_id, $key, true ) !== '' ) : ?>
+
+                    <h6><?php echo $label; ?></h6>
                     
-                </div>
+                    <?php
+            
+                    // Ensure we have properly working links
+                    $url = get_user_meta( $user_id, $key, true );
+                    $has_http = preg_match_all( '/(http)?(s)?(:)?(\/\/)/i', $url, $matches );
+                    
+                    if ( $has_http == 0 ) {
+                        $link = '//' . $url;
+                    }
+                    else {
+                        $link = $url;
+                    }
+            
+                    $link_title = sprintf( 
+                        __( "%s's %s Profile", PyisMemberProfile::$plugin_id ), 
+                        $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name,
+                        $label 
+                    );
+            
+                    ?>
+            
+                    <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
 
-                <h3 style="margin-top: 0;"><?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; ?></h3>
+                <?php endif;
 
-                <?php 
+            endforeach;
 
-                $course_id = get_theme_mod( 'pyis_course', 0 );
+            if ( $pyis_user_data->user_url !== '' ) : 
+            
+                // Ensure we have properly working links
+                $url = $pyis_user_data->user_url;
+                $has_http = preg_match_all( '/(http)?(s)?(:)?(\/\/)/i', $url, $matches );
 
-                $register_date = new DateTime( $pyis_user_data->user_registered );
-                $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
-                $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
+                if ( $has_http == 0 ) {
+                    $link = '//' . $url;
+                }
+                else {
+                    $link = $url;
+                }
 
+                $link_title = sprintf( 
+                    __( "%s's Website", PyisMemberProfile::$plugin_id ), 
+                    $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name
+                );
+            
                 ?>
 
-                <?php echo apply_filters( 'the_content', 
-                    sprintf( 
-                        __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
-                        $register_date->format( 'F jS, Y' ) 
-                    ) 
-                ); ?>
+                <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
+                <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
 
-                <?php echo apply_filters( 'the_content', 
-                    sprintf( 
-                        __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
-                        number_format( $course_progress, 2, '.', ',' )
-                    ) 
-                ); ?>
+            <?php endif; ?>
 
-                <?php echo apply_filters( 'the_content', 
-                     sprintf( 
-                         __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
-                         ( learndash_course_completed( $user_id, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
-                     ) 
-                ); ?>
-                
-            </div>
-            
-            <div class="pyis-profile-bottom x-column x-sm x-1-1">
-
-                <strong><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></strong>
-                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) ); ?>
-
-                <strong><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></strong>
-                <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
-
-                <?php echo get_user_meta( $user_id, 'twitter', true ); ?>
-                
-            </div>
-            
         </div>
 
     </div>

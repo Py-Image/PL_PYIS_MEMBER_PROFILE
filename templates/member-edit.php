@@ -87,91 +87,90 @@ else {
 
 ?>
 
-<div class="x-container max width offset">
+<div class="x-container max width offset entry-wrap">
     <div class="full-width" role="main">
-        
-        <!-- Pushes content more toward center -->
-        <div class="x-container max width offset">
             
-            <form id="featured_upload" method="post" enctype="multipart/form-data">
-                <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
-            
-                <div class="pyis-profile-top x-column x-sm x-1-1">
+        <form id="featured_upload" method="post" enctype="multipart/form-data">
+            <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
 
-                    <div class="pyis-avatar-container alignleft">
-                        
-                        <?php echo get_avatar( $user_id, 150, false, false, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
-                        <input type="hidden" name="pyis_profile_image" id="pyis_profile_image_data" />
+            <div class="pyis-profile-top x-column x-sm x-1-1">
 
-                        <p class="open-modal-container"><a id="open-modal-link" data-open="image-upload-modal">Upload a New Avatar</a></p>
+                <div class="pyis-avatar-container alignleft">
 
-                    </div>
+                    <?php echo get_avatar( $user_id, 150, false, false, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
+                    <input type="hidden" name="pyis_profile_image" id="pyis_profile_image_data" />
 
-                    <label>
-                        <input type="text" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
-
-                    <?php 
-
-                    $course_id = get_theme_mod( 'pyis_course', 0 );
-
-                    $register_date = new DateTime( $pyis_user_data->user_registered );
-                    $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
-                    $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
-
-                    ?>
-
-                    <?php echo apply_filters( 'the_content', 
-                        sprintf( 
-                            __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
-                            $register_date->format( 'F jS, Y' ) 
-                        ) 
-                    ); ?>
-
-                    <?php echo apply_filters( 'the_content', 
-                        sprintf( 
-                            __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
-                            number_format( $course_progress, 2, '.', ',' )
-                        ) 
-                    ); ?>
-
-                    <?php echo apply_filters( 'the_content', 
-                         sprintf( 
-                             __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
-                             ( learndash_course_completed( $user_id, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
-                         ) 
-                    ); ?>
+                    <p class="open-modal-container"><a id="open-modal-link" data-open="image-upload-modal">Upload a New Avatar</a></p>
 
                 </div>
 
-                <div class="profile-bottom x-column x-sm x-1-1">
+                <label>
+                    <input type="text" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
 
-                    <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <?php wp_editor( get_user_meta( $user_id, 'description', true ), 'description', array( 
-                        'media_buttons' => false,
-                        'textarea_rows' => 10,
-                    ) ); ?>
+                <?php 
 
-                    <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
-                    
-                    <h6><?php _e( 'LinkedIn', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <input type="text" name="linkedin" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" />
+                $course_id = get_theme_mod( 'pyis_course', 0 );
 
-                    <h6><?php _e( 'GitHub', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <input type="text" name="github" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" />
-                    
-                    <h6><?php _e( 'Twitter', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <input type="text" name="twitter" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" />
-                    
-                    <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <input type="text" name="user_url" value="<?php echo $pyis_user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />
+                $register_date = new DateTime( $pyis_user_data->user_registered );
+                $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
+                $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
-                </div>
-                
-                <input id="pyis_profile_submit" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
-                
-            </form>
-            
-        </div>
+                ?>
+
+                <?php echo apply_filters( 'the_content', 
+                    sprintf( 
+                        __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
+                        $register_date->format( 'F jS, Y' ) 
+                    ) 
+                ); ?>
+
+                <?php echo apply_filters( 'the_content', 
+                    sprintf( 
+                        __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
+                        number_format( $course_progress, 2, '.', ',' )
+                    ) 
+                ); ?>
+
+                <?php echo apply_filters( 'the_content', 
+                     sprintf( 
+                         __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
+                         ( learndash_course_completed( $user_id, $course_id ) ? __( 'Yes', PyisMemberProfile::$plugin_id ) : __( 'No', PyisMemberProfile::$plugin_id ) ) 
+                     ) 
+                ); ?>
+
+            </div>
+
+            <div class="profile-bottom x-column x-sm x-1-1">
+
+                <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
+                <?php wp_editor( get_user_meta( $user_id, 'description', true ), 'description', array( 
+                    'media_buttons' => false,
+                    'textarea_rows' => 10,
+                ) ); ?>
+
+                <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
+                <?php wp_editor( get_user_meta( $user_id, 'pyis_skills', true ), 'pyis_skills', array( 
+                    'media_buttons' => false,
+                    'textarea_rows' => 10,
+                ) ); ?>
+
+                <h6><?php _e( 'LinkedIn', PyisMemberProfile::$plugin_id ); ?></h6>
+                <input type="text" name="linkedin" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" />
+
+                <h6><?php _e( 'GitHub', PyisMemberProfile::$plugin_id ); ?></h6>
+                <input type="text" name="github" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" />
+
+                <h6><?php _e( 'Twitter', PyisMemberProfile::$plugin_id ); ?></h6>
+                <input type="text" name="twitter" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" />
+
+                <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
+                <input type="text" name="user_url" value="<?php echo $pyis_user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />
+
+            </div>
+
+            <input id="pyis_profile_submit" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
+
+        </form>
 
     </div>
 </div>
