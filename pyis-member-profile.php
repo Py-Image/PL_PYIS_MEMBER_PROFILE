@@ -21,6 +21,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
 
         private static $instance = null;
         public static $plugin_id = 'pyis-member-profile';
+        private $member_directory_regex = '/\/member-directory(|\/)(page\/\d)?/i';
+        private $member_profile_regex = '/\/members\/.+(|\/)$/i';
+        private $member_profile_json_regex = '/\/members\/.+(|\/)?json$/i';
 
         /**
          * Get active instance
@@ -84,8 +87,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'profile_update', array( $this, 'profile_update' ) );
             add_action( 'user_register', array( $this, 'profile_update' ) );
             
-            add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-            add_action( 'wp_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+            add_action( 'init', array( $this, 'register_styles_scripts' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
             
             add_action( 'wp_footer', array( $this, 'member_crop_modal' ) );
             
@@ -190,7 +193,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function template_redirect( $template ) {
             
-            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+            if ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) {
                 
                 // make sure the server responds with 200 instead of error code 404
                 header( 'HTTP/1.1 200 OK' );
@@ -201,7 +204,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
             
             }
-            else if ( preg_match( '/\/members\/.+(|\/)?json$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( $this->member_profile_json_regex, $_SERVER['REQUEST_URI'] ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );
                 header( 'Content-Type: application/json' );
@@ -211,7 +214,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
                 
             }
-            else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );
                 
@@ -234,10 +237,10 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function template_title( $title, $sep, $seplocation ) {
             
-            if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) {
+            if ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) {
                 return __( 'Member Directory', $plugin->id );
             }
-            else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+            else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
     
                 // Made available before wp_head() is called
                 global $user_data;
@@ -262,11 +265,11 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             // Yoast SEO handles this if installed
             if ( ! class_exists( 'WPSEO_Frontend' ) ) {
             
-                if ( preg_match( '/\/member-directory(|\/)(page\/\d)?/i', $_SERVER['REQUEST_URI'] ) ) { ?>
+                if ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) { ?>
                     <meta property="og:title" content="<?php _e( 'Member Directory', $plugin->id ); ?>">
                     <meta property="twitter:title" content="<?php _e( 'Member Directory', $plugin->id ); ?>">
                 <?php }
-                else if ( preg_match( '/\/members\/.+(|\/)$/i', $_SERVER['REQUEST_URI'] ) ) {
+                else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
 
                     // Made available before wp_head() is called
                     global $user_data;
@@ -425,11 +428,35 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
-        public function admin_enqueue_scripts() {
+        public function register_styles_scripts() {
+            
+            wp_register_style( 
+                $this->plugin_id . '-style',
+                plugins_url( '/style.css', __FILE__ )
+            );
+            
+            wp_register_script(
+                $this->plugin_id . '-script',
+                plugins_url( '/script.js', __FILE__ ),
+                array( 'jquery' ),
+                false,
+                true
+            );
+            
+        }
+        
+        public function wp_enqueue_scripts() {
+            
+            // Only load our styles and scripts on our own pages
+            if ( ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) 
+                || ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) ) {
  
-            wp_enqueue_media();
-            wp_enqueue_script( 'pyis-admin-uploader', plugins_url( '/script.js', __FILE__ ), array( 'jquery' ), false, true );
-            wp_enqueue_style( 'pyis-style', plugins_url( '/style.css', __FILE__ ) );
+                wp_enqueue_style( $this->plugin_id . '-style' );
+
+                wp_enqueue_media();
+                wp_enqueue_script( $this->plugin_id . '-script' );
+                
+            }
             
         }
         

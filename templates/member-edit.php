@@ -16,8 +16,6 @@ add_filter( 'wp_default_editor', function() {
     return 'tinymce';
 } );
 
-//var_dump( $_POST )
-
 if ( 
 	isset( $_POST['pyis_profile_nonce'] ) 
 	&& wp_verify_nonce( $_POST['pyis_profile_nonce'], PyisMemberProfile::$plugin_id )
@@ -42,7 +40,7 @@ if (
     
     // There's info from wp_usermeta and wp_users being shown here. We need to update it differently for each.
     $update_user_meta = array(
-        'mepr_user_message',
+        'description',
         'linkedin',
         'github',
         'twitter',
@@ -148,7 +146,7 @@ else {
                 <div class="profile-bottom x-column x-sm x-1-1">
 
                     <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
-                    <?php wp_editor( get_user_meta( $user_id, 'mepr_user_message', true ), 'mepr_user_message', array( 
+                    <?php wp_editor( get_user_meta( $user_id, 'description', true ), 'description', array( 
                         'media_buttons' => false,
                         'textarea_rows' => 10,
                     ) ); ?>

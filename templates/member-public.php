@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="pyis-profile-bottom x-column x-sm x-1-1">
 
                 <strong><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></strong>
-                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'mepr_user_message', true ) ); ?>
+                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) ); ?>
 
                 <strong><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></strong>
                 <?php echo apply_filters( 'the_content', 'blahblabhablabhablha' ); ?>
