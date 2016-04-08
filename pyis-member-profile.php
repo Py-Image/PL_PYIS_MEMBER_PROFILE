@@ -92,12 +92,17 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_action( 'wp_footer', array( $this, 'member_crop_modal' ) );
             
-            add_filter( 'posts_where', array( $this, 'subscribers_can_only_see_own_files' ) );
-            
             add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
             
         }
         
+        /**
+         * On Plugin activation, create the Avatars directory if it doesn't exist.
+         * We won't delete this on deactivation. This will be up to the User.
+         * 
+         * @access      public
+         * @since       1.0
+         */
         public static function create_avatars_directory() {
                 
             $uploads = wp_upload_dir();
@@ -120,7 +125,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          * Taken from bbPress
          *
          * @access      public
-         * @since       v1.0
+         * @since       1.0
          *
          * @param       string|array $template_names Template file(s) to search for, in order.
          * @param       bool $load If true the template file will be loaded if it is found.
@@ -167,6 +172,15 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Takes a Data-URI and Streams it into a proper File
+         * 
+         * @access public
+         * @since  1.0
+         * @param  string $data_uri    Data-URI String
+         * @param  string $output_file Path to the file output on the server
+         * @return File  File in memory. Needs to be saved through another method.
+         */
         public static function pyis_data_uri_decode( $data_uri, $output_file ) {
             
             if ( $data_uri == '' ) {
@@ -348,6 +362,19 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * If the User has a custom Avatar, show that instead of Gravatar
+         * 
+         * @access public
+         * @since  1.0
+         * @param  string   $avatar      HTML Output for the Avatar
+         * @param  mixed    $id_or_email This can be either a User ID, Email Address, or Comment Object. Thanks, WP
+         * @param  integer  $size        Height/Width of Avatar. Square Image.
+         * @param  array    $default     Overrides for get_avatar()'s default values
+         * @param  string   $alt         Alt Text for the Image
+         * @param  array    $args        Additional Arguments for get_avatar(). Most notably, $args['extra_attr']
+         * @return string   User Avatar HTML
+         */
         public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
             
             $user = false;
@@ -392,24 +419,14 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
-        public function subscribers_can_only_see_own_files( $where ){
-            
-            global $current_user;
-
-            if ( is_user_logged_in() && $current_user->roles[0] == 'subscriber' ){
-                // we spreken over een ingelogde user
-                if ( isset( $_POST['action'] ) ){
-                    // library query
-                    if( $_POST['action'] == 'query-attachments' ){
-                        $where .= ' AND post_author=' . $current_user->data->ID;
-                    }
-                }
-            }
-
-            return $where;
-            
-        }
-        
+        /**
+         * Ensure that Subscribers can only upload Images
+         * 
+         * @access public
+         * @since 1.0
+         * @param  array    $mime_types Mime Types
+         * @return array    Mime Types
+         */
         public function subscribers_can_only_upload_images( $mime_types ) {
             
             global $current_user;
@@ -428,6 +445,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Register Styles/Scripts to be enqueued later
+         * 
+         * @access public
+         * @since 1.0
+         * @return void
+         */
         public function register_styles_scripts() {
             
             wp_register_style( 
@@ -445,6 +469,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Enqueue Scripts/Styles for our Pages
+         * 
+         * @access public
+         * @since 1.0
+         @return void
+         */
         public function wp_enqueue_scripts() {
             
             // Only load our styles and scripts on our own pages
@@ -460,14 +491,25 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
         }
         
+        /**
+         * Include the Modal template on our Edit Profile page within the Footer, to ensure no weird HTML quirks.
+         * 
+         * @access public
+         * @since 1.0
+         * @return void
+         */
         public function member_crop_modal() {
             
-            global $current_user;
-            global $user_data;
+            if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
             
-            if ( $current_user->data->ID == $user_data->data->ID ) {
-                
-                include( $this->pyis_locate_template( 'member-modal.php' ) );
+                global $current_user;
+                global $user_data;
+
+                if ( $current_user->data->ID == $user_data->data->ID ) {
+
+                    include( $this->pyis_locate_template( 'member-modal.php' ) );
+
+                }
                 
             }
             
