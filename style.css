@@ -82,6 +82,20 @@ body.is-reveal-open {
 #pyis_profile_edit .validation-error {
   border: 4px #FF0000 solid; }
 
+.pyis-success-message {
+  padding: 1em;
+  width: 100%;
+  margin-bottom: 1em;
+  border: 4px #17AF17 solid;
+  color: #17AF17; }
+
+.pyis-error-message {
+  padding: 1em;
+  width: 100%;
+  margin-top: 1em;
+  border: 4px #FF0000 solid;
+  color: #FF0000; }
+
 body, html {
   height: 100%; }
 

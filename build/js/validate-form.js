@@ -3,6 +3,7 @@ jQuery( function( $ ) {
     $( document ).ready( function() {
     
         var $form = $( '#pyis_profile_edit' );
+        $form[0].noValidate = true;
 
         if ( $form.length > 0 ) {
 
@@ -11,6 +12,9 @@ jQuery( function( $ ) {
                 // Assume form is invalid to start
                 var valid = false;
                 
+                // Hide the Submission Error Message if shown
+                $( '.pyis-error-message' ).hide();
+                
                 // Count the invalid fields
                 var invalidFields = 0;
                 
@@ -18,7 +22,7 @@ jQuery( function( $ ) {
                     
                     $( element ).removeClass( 'validation-error' );
                     $( element )[0].setCustomValidity( '' );
-                    $( element ).next( '.pyis-error-message' ).html( '' );
+                    $( element ).next( '.pyis-error-hint' ).html( '' );
                     
                     if ( 
                         ( $( element ).val().length > 0 ) 
@@ -29,7 +33,7 @@ jQuery( function( $ ) {
                         
                         var invalidText = 'Your entry must contain "' + $( element ).data( 'validate' ) + '"';
                         $( element )[0].setCustomValidity( invalidText );
-                        $( element ).next( '.pyis-error-message' ).html( invalidText );
+                        $( element ).next( '.pyis-error-hint' ).html( invalidText );
                         
                         invalidFields++;
                         
@@ -41,6 +45,11 @@ jQuery( function( $ ) {
                 
                 if ( invalidFields == 0 ) {
                     valid = true;
+                }
+                else {
+                    
+                    $( '.pyis-error-message' ).show();
+                    
                 }
                 
                 return valid;

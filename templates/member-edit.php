@@ -84,6 +84,19 @@ else {
 
 <div class="x-container max width offset entry-wrap">
     <div class="full-width" role="main">
+        
+        <?php 
+        if ( 
+            isset( $_POST['pyis_profile_nonce'] ) 
+            && wp_verify_nonce( $_POST['pyis_profile_nonce'], PyisMemberProfile::$plugin_id )
+            && current_user_can( 'upload_files', 0 )
+        ) : ?>
+        
+        <div class="pyis-success-message">
+            <?php _e( 'Submission Successful', PyisMemberProfile::$plugin_id ); ?>
+        </div>
+        
+        <?php endif; ?>
             
         <form id="pyis_profile_edit" method="post" enctype="multipart/form-data">
             <?php wp_nonce_field( PyisMemberProfile::$plugin_id, 'pyis_profile_nonce' ); ?>
@@ -150,13 +163,13 @@ else {
                 ) ); ?>
 
                 <h6><?php _e( 'LinkedIn', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="linkedin" class="pyis-validate-url" data-validate="linkedin.com" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
+                <input type="text" name="linkedin" class="pyis-validate-url" data-validate="linkedin.com" value="<?php echo get_user_meta( $user_id, 'linkedin', true ); ?>" placeholder="<?php _e( 'Enter Your LinkedIn URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-hint"></span>
 
                 <h6><?php _e( 'GitHub', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="github" class="pyis-validate-url" data-validate="github.com" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
+                <input type="text" name="github" class="pyis-validate-url" data-validate="github.com" value="<?php echo get_user_meta( $user_id, 'github', true ); ?>" placeholder="<?php _e( 'Enter Your GitHub URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-hint"></span>
 
                 <h6><?php _e( 'Twitter', PyisMemberProfile::$plugin_id ); ?></h6>
-                <input type="text" name="twitter" class="pyis-validate-url" data-validate="twitter.com" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-message"></span>
+                <input type="text" name="twitter" class="pyis-validate-url" data-validate="twitter.com" value="<?php echo get_user_meta( $user_id, 'twitter', true ); ?>" placeholder="<?php _e( 'Enter Your Twitter URL', PyisMemberProfile::$plugin_id ); ?>" /> <span class="pyis-error-hint"></span>
 
                 <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
                 <input type="text" name="user_url" value="<?php echo $pyis_user_data->user_url; ?>" placeholder="<?php _e( 'Enter Your Website', PyisMemberProfile::$plugin_id ); ?>" />
@@ -164,6 +177,10 @@ else {
             </div>
 
             <input id="pyis_profile_submit" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
+                
+            <div class="pyis-error-message" style="display: none;">
+                <?php _e( 'Submission Error', PyisMemberProfile::$plugin_id ); ?>
+            </div>
 
         </form>
 

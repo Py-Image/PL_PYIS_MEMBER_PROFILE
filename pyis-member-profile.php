@@ -583,8 +583,17 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             // The scripts are only needed for Profile Editing
             if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
-                wp_enqueue_media();
-                wp_enqueue_script( $this->plugin_id . '-script' );
+                
+                global $current_user;
+                global $pyis_user_data;
+
+                if ( $current_user->data->ID == $pyis_user_data->data->ID ) {
+                    
+                    wp_enqueue_media();
+                    wp_enqueue_script( $this->plugin_id . '-script' );
+                    
+                }
+                
             }
             
         }
