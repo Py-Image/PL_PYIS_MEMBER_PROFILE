@@ -21,6 +21,10 @@ $wp_query->is_page = true;
 $user_name = explode( '/', $_SERVER['REQUEST_URI'] );
 $user_name = $user_name[ count( $user_name ) - 1 ];
 
+// Sometimes extra parameters that aren't our ?json one may get added. In this case, let's ignore them.
+$user_name = explode( '?', $user_name );
+$user_name = $user_name[0];
+
 $user = get_user_by( 'login', $user_name );
 
 $user_id = $user->data->ID;

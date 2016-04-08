@@ -573,15 +573,18 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
          */
         public function wp_enqueue_scripts() {
             
-            // Only load our styles and scripts on our own pages
+            // Only load our styles on our own pages
             if ( ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) 
                 || ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) ) {
  
                 wp_enqueue_style( $this->plugin_id . '-style' );
-
+                
+            }
+            
+            // The scripts are only needed for Profile Editing
+            if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
                 wp_enqueue_media();
                 wp_enqueue_script( $this->plugin_id . '-script' );
-                
             }
             
         }

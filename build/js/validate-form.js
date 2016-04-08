@@ -3,13 +3,10 @@ jQuery( function( $ ) {
     $( document ).ready( function() {
     
         var $form = $( '#pyis_profile_edit' );
-        $form[0].noValidate = true;
 
         if ( $form.length > 0 ) {
 
             $form.submit( function( event ) {
-                
-                event.preventDefault();
                 
                 // Assume form is invalid to start
                 var valid = false;
@@ -20,9 +17,13 @@ jQuery( function( $ ) {
                 $( '.pyis-validate-url' ).each( function( index, element ) {
                     
                     $( element ).removeClass( 'validation-error' );
+                    $( element )[0].setCustomValidity( '' );
                     $( element ).next( '.pyis-error-message' ).html( '' );
                     
-                    if ( $( element ).val().indexOf( $( element ).data( 'validate' ) ) == -1 ) {
+                    if ( 
+                        ( $( element ).val().length > 0 ) 
+                        && ( $( element ).val().indexOf( $( element ).data( 'validate' ) ) == -1 )
+                    ) {
                         
                         $( element ).addClass( 'validation-error' );
                         
@@ -36,12 +37,10 @@ jQuery( function( $ ) {
                     
                 } );
                 
-                console.log( invalidFields );
-                
                 $form[0].reportValidity();
                 
                 if ( invalidFields == 0 ) {
-                    //valid = true;
+                    valid = true;
                 }
                 
                 return valid;
