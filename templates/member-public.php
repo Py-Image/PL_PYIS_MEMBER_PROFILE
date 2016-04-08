@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div class="pyis-avatar-container alignleft">
 
-                <?php echo get_avatar( $user_id, 150, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
+                <?php echo get_avatar( $user_id, 150 ); ?>
 
             </div>
 

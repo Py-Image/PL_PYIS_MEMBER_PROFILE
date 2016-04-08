@@ -24,13 +24,13 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 get_header();
 ?>
 
-<div class="pyis-member-directory-container x-container max width offset">
+<div class="pyis-member-directory-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
         
         <form method="GET" class="form-search x-container max width offset">
             <div class="x-container max width offset">
                 <div class="x-column x-sm x-1-4">
-                    <label>
+                    <label for="graduated">
                         <input type="checkbox" name="graduated" value="yes" <?php echo ( trim( strtolower( $_GET['graduated'] ) ) == 'yes' ? 'checked="checked"' : '' ); ?> /> <?php _e( 'Graduated', PyisMemberProfile::$plugin_id ); ?>
                     </label>
                 </div>

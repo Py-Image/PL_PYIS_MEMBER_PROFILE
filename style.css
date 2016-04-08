@@ -165,4 +165,20 @@ body, html {
 .wp-editor-wrap {
   margin-top: -2em;
   margin-bottom: 2em; }
+
+.pyis-member-directory-container .x-container {
+  margin-bottom: 0 !important; }
+
+.pyis-member-directory-container .form-search label[for="graduated"] {
+  margin-top: 0.65em; }
+
+.pyis-member-directory-container .form-search .search-query {
+  padding: 0 0.65em; }
+
+.pyis-member-directory-container .form-search input[type="submit"] {
+  box-shadow: none;
+  padding: 0.35em 1em; }
+
+.pyis-member-edit-container input[type="submit"] {
+  margin-top: 0.5em; }
 /*# sourceMappingURL=style.css.map */

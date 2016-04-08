@@ -1,0 +1,26 @@
+.pyis-member-directory-container {
+    
+    .x-container {
+        margin-bottom: 0 !important;
+    }
+    
+    
+    .form-search {
+        
+        label[for="graduated"] {
+            margin-top: 0.65em;
+        }
+        
+        .search-query {
+            padding: 0 0.65em;
+        }
+        
+        // Default X-Theme Styling makes this an eyesore when aligned horizontally
+        input[type="submit"] {
+            box-shadow: none;
+            padding: 0.35em 1em;
+        }
+        
+    }
+    
+}

@@ -176,7 +176,7 @@ else {
 
             </div>
 
-            <input id="pyis_profile_submit" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
+            <input id="pyis_profile_submit" class="x-btn x-btn-jumbo" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
                 
             <div class="pyis-error-message" style="display: none;">
                 <?php echo apply_filters( 'pyis_member_submission_error', __( 'Submission Error', PyisMemberProfile::$plugin_id ) ); ?>
