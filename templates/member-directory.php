@@ -27,6 +27,14 @@ get_header();
 <div class="pyis-member-directory-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
         
+        <?php if ( $course_id == 0 ) : ?>
+        
+            <div class="pyis-error-message">
+                <?php echo apply_filters( 'pyis_profile_course_not_set', sprintf( __( 'Course Not Set In <a href="%s">Customizer</a>', PyisMemberProfile::$plugin_id ), admin_url( 'customize.php?autofocus[control]=pyis_course' ) ) ); ?>
+            </div>
+        
+        <?php endif; ?>
+        
         <form method="GET" class="form-search x-container max width offset">
             <div class="x-container max width offset">
                 <div class="x-column x-sm x-1-4">

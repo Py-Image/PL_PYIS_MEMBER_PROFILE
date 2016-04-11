@@ -9,10 +9,22 @@
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
     die;
-} ?>
+} 
+
+$course_id = get_theme_mod( 'pyis_course', 0 );
+
+?>
 
 <div class="pyis-member-profile-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
+        
+        <?php if ( $course_id == 0 ) : ?>
+        
+            <div class="pyis-error-message">
+                <?php echo apply_filters( 'pyis_profile_course_not_set', sprintf( __( 'Course Not Set In <a href="%s">Customizer</a>', PyisMemberProfile::$plugin_id ), admin_url( 'customize.php?autofocus[control]=pyis_course' ) ) ); ?>
+            </div>
+        
+        <?php endif; ?>
             
         <div class="pyis-profile-top x-column x-sm x-1-1">
 
@@ -25,8 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             <h3 style="margin-top: 0;"><?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; ?></h3>
 
             <?php 
-
-            $course_id = get_theme_mod( 'pyis_course', 0 );
 
             $register_date = new DateTime( $pyis_user_data->user_registered );
             $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );

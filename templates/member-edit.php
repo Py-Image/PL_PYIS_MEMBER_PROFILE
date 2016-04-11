@@ -80,10 +80,20 @@ else {
 	// The security check failed, maybe show the user an error.
 }
 
+$course_id = get_theme_mod( 'pyis_course', 0 );
+
 ?>
 
 <div class="pyis-member-edit-container x-container max width offset entry-wrap">
     <div class="full-width" role="main">
+        
+        <?php if ( $course_id == 0 ) : ?>
+        
+            <div class="pyis-error-message">
+                <?php echo apply_filters( 'pyis_profile_course_not_set', sprintf( __( 'Course Not Set In <a href="%s">Customizer</a>', PyisMemberProfile::$plugin_id ), admin_url( 'customize.php?autofocus[control]=pyis_course' ) ) ); ?>
+            </div>
+        
+        <?php endif; ?>
         
         <?php 
         if ( 
@@ -116,8 +126,6 @@ else {
                     <input type="text" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
 
                 <?php 
-
-                $course_id = get_theme_mod( 'pyis_course', 0 );
 
                 $register_date = new DateTime( $pyis_user_data->user_registered );
                 $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
