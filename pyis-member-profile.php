@@ -85,7 +85,6 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_action( 'show_user_profile', array( $this, 'add_skills_field' ) );
             add_action( 'edit_user_profile', array( $this, 'add_skills_field' ) );
-            add_action( 'user_new_form', array( $this, 'add_skills_field' ) );
             
             add_action( 'personal_options_update', array( $this, 'save_skills_field' ) );
             add_action( 'edit_user_profile_update', array( $this, 'save_skills_field' ) );
@@ -95,6 +94,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'wp_default_editor', array( $this, 'visual_editor_forced_on_frontend' ) );
             
             add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
+            add_filter( 'user_profile_picture_description', array( $this, 'edit_user_gravatar_description' ) );
             add_filter( 'user_has_cap', array( $this, 'allow_subscribers_to_upload_avatars' ), 10, 3 );
             add_filter( 'upload_mimes', array( $this, 'subscribers_can_only_upload_images' ) );
             
@@ -433,6 +433,17 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 return 'tinymce';
                 
             }
+            
+        }
+        
+        /**
+         * Add to the Gravatar Description text a note about uploading images on the Frontend.
+         * @param  string $description Original Description Text
+         * @return string Modified Description Text
+         */
+        public function edit_user_gravatar_description( $description ) {
+            
+            return sprintf( __( "You can change your profile picture on <a href='%s'>Gravatar</a>, or via your profile page once you're logged in.", $this->plugin_id ), 'https://en.gravatar.com/' );
             
         }
         
