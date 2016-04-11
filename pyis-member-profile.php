@@ -116,7 +116,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 
             $uploads = wp_upload_dir();
             
-            $pyis_avatars = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
+            $pyis_avatars = trailingslashit( $uploads['basedir'] ) . apply_filters( 'pyis_avatars_directory', 'pyis-avatars' );
 
             if ( ! is_dir( $pyis_avatars ) ) :
                 wp_mkdir_p( $pyis_avatars );
@@ -475,13 +475,13 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 
                 $user_login = $user->data->user_login;
                 $uploads = wp_upload_dir();
-                $pyis_avatars_directory = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
+                $pyis_avatars_directory = trailingslashit( $uploads['basedir'] ) . apply_filters( 'pyis_avatars_directory', 'pyis-avatars' );
                 
                 // Server Path
                 $user_avatar = trailingslashit( $pyis_avatars_directory ) . $user_login . '.png';
                 
                 // Web-accessable path
-                $user_avatar_url = $uploads['baseurl'] . trailingslashit( apply_filters( 'pyis_avatars_directory', '/pyis-avatars' ) ) . $user_login . '.png';
+                $user_avatar_url = trailingslashit( $uploads['baseurl'] ) . trailingslashit( apply_filters( 'pyis_avatars_directory', 'pyis-avatars' ) ) . $user_login . '.png';
 
                 if ( file_exists( $user_avatar ) ) {
                     $avatar = "<img alt='{$alt}' src='{$user_avatar_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' {$args['extra_attr']} />";

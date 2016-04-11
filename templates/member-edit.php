@@ -22,7 +22,7 @@ if (
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
     
     $uploads = wp_upload_dir();
-    $pyis_avatars = $uploads['basedir'] . apply_filters( 'pyis_avatars_directory', '/pyis-avatars' );
+    $pyis_avatars = trailingslashit( $uploads['basedir'] ) . apply_filters( 'pyis_avatars_directory', 'pyis-avatars' );
     
     // Pica always converts the images to .PNGs.
     $image_path = PyisMemberProfile::pyis_data_uri_decode( $_POST['pyis_profile_image'], trailingslashit( $pyis_avatars ) . $pyis_user_data->user_login . '.png' );
