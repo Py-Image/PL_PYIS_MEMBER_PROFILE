@@ -21,6 +21,28 @@ $user_name = $user_name[ count( $user_name ) - 1 ];
 $user = get_user_by( 'login', $user_name );
 $user_id = $user->data->ID;
 
+if ( $user->roles[0] !== 'subscriber' ) {
+    
+    // No checking JSON for non-subscribers
+    
+    header( 'Content-Type: text/html' );
+    
+    global $wp_query;
+
+    // Tricking WP Core functions into thinking we're a real Page.
+    $wp_query->is_404 = false;
+    $wp_query->is_page = true;
+    
+    get_header();
+    
+    include( PyisMemberProfile::pyis_locate_template( 'member-not-found.php' ) );
+    
+    get_footer();
+    
+    die();
+    
+}
+
 // Now that we have queried the User from the URL, we can access a lot more data
 $pyis_user_data = get_userdata( $user_id );
 $course_id = get_theme_mod( 'pyis_course', 0 );
