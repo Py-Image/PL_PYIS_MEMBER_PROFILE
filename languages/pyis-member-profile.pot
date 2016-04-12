@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PyImageSearch Profile Plugin 1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/pyis-member-profile\n"
-"POT-Creation-Date: 2016-04-11 16:36:41+00:00\n"
+"POT-Creation-Date: 2016-04-12 13:01:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,50 +14,55 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: pyis-member-profile.php:264 pyis-member-profile.php:292
-#: pyis-member-profile.php:293
+#: pyis-member-profile.php:263 pyis-member-profile.php:297
+#: pyis-member-profile.php:298
 msgid "Member Directory"
 msgstr ""
 
-#: pyis-member-profile.php:271 pyis-member-profile.php:301
-#: pyis-member-profile.php:302
+#: pyis-member-profile.php:272 pyis-member-profile.php:308
+#: pyis-member-profile.php:309
+msgid "Member Not Found"
+msgstr ""
+
+#: pyis-member-profile.php:275 pyis-member-profile.php:313
+#: pyis-member-profile.php:314
 msgid "%s's Profile"
 msgstr ""
 
-#: pyis-member-profile.php:321
+#: pyis-member-profile.php:335
 msgid "PyImageSearch Profile Settings"
 msgstr ""
 
-#: pyis-member-profile.php:335
+#: pyis-member-profile.php:349
 msgid "Select a Course"
 msgstr ""
 
-#: pyis-member-profile.php:349
+#: pyis-member-profile.php:363
 msgid "Course"
 msgstr ""
 
-#: pyis-member-profile.php:385
+#: pyis-member-profile.php:399
 msgid "PyImageSearch Member Profile"
 msgstr ""
 
-#: pyis-member-profile.php:390
+#: pyis-member-profile.php:404
 msgid "Skills"
 msgstr ""
 
-#: pyis-member-profile.php:446
+#: pyis-member-profile.php:460
 msgid ""
 "You can change your profile picture on <a href='%s'>Gravatar</a>, or via "
 "your profile page once you're logged in."
 msgstr ""
 
-#: pyis-member-profile.php:693
+#: pyis-member-profile.php:707
 msgid ""
 "<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires "
 "<strong><a href = \"%s\" target=\"_blank\">MemberPress</a></strong> to be "
 "Active!</p>"
 msgstr ""
 
-#: pyis-member-profile.php:710
+#: pyis-member-profile.php:724
 msgid ""
 "<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires "
 "<strong><a href = \"%s\" target=\"_blank\">LearnDash</a></strong> to be "

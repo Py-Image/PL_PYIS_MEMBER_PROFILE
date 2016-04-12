@@ -89,7 +89,6 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'personal_options_update', array( $this, 'save_skills_field' ) );
             add_action( 'edit_user_profile_update', array( $this, 'save_skills_field' ) );
             add_action( 'profile_update', array( $this, 'save_skills_field' ) );
-            add_action( 'user_register', array( $this, 'save_skills_field' ) );
 
             add_filter( 'wp_default_editor', array( $this, 'visual_editor_forced_on_frontend' ) );
             
@@ -267,8 +266,14 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
     
                 // Made available before wp_head() is called
                 global $pyis_user_data;
-
-                return sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name );
+                
+                // If the user doesn't exist or isn't Subscriber-level
+                if ( ( ! $pyis_user_data ) || ( $pyis_user_data->roles[0] !== 'subscriber' ) ) {
+                    return __( "Member Not Found", $this->plugin_id );
+                }
+                else {
+                    return sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name );
+                }
                 
             }
             
@@ -296,10 +301,19 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
 
                     // Made available before wp_head() is called
                     global $pyis_user_data;
-                    ?>
+                    
+                    // If the user doesn't exist or isn't Subscriber-level
+                    if ( ( ! $pyis_user_data ) || ( $pyis_user_data->roles[0] !== 'subscriber' ) ) : ?>
 
-                    <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
-                    <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
+                        <meta property="og:title" content="<?php _e( "Member Not Found", $this->plugin_id ); ?>">
+                        <meta property="twitter:title" content="<?php _e( "Member Not Found", $this->plugin_id ); ?>">
+                        
+                    <?php else : ?>
+
+                        <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
+                        <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
+
+                    <?php endif; ?>
 
                 <?php }
                 
