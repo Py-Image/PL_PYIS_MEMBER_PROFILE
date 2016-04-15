@@ -35,7 +35,7 @@ get_header();
         
         <?php endif; ?>
         
-        <form method="GET" class="form-search x-container max width offset">
+        <form method="GET" action="/member-directory" class="form-search x-container max width offset">
             <div class="x-container max width offset">
                 <div class="x-column x-sm x-1-4">
                     <label for="graduated">
