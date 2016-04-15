@@ -203,7 +203,7 @@ get_header();
         
         <?php else :
         
-        echo apply_filters( 'pyis_member_directory_nothing_found', __( 'No Members Found Matching Your Request', PyisMemberProfile::$plugin_id ) );
+        echo apply_filters( 'pyis_member_directory_nothing_found', sprintf( __( 'Sorry, no members were found using your supplied filters. Looking for someone in particular? <a href="%s">Send me a message</a>', PyisMemberProfile::$plugin_id ), '/contact' ) );
 
         endif; ?>
         
