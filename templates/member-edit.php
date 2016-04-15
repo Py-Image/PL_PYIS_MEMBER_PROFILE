@@ -109,7 +109,7 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
         ) : ?>
         
             <div class="pyis-success-message">
-                <?php echo apply_filters( 'pyis_member_submission_success', __( 'Submission Successful', PyisMemberProfile::$plugin_id ) ); ?>
+                <?php echo apply_filters( 'pyis_member_submission_success', __( 'Nice, your changes have been saved.', PyisMemberProfile::$plugin_id ) ); ?>
             </div>
         
         <?php endif; ?>
@@ -206,7 +206,7 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
             <input id="pyis_profile_submit" class="x-btn x-btn-jumbo" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
                 
             <div class="pyis-error-message" style="display: none;">
-                <?php echo apply_filters( 'pyis_member_submission_error', __( 'Submission Error', PyisMemberProfile::$plugin_id ) ); ?>
+                <?php echo apply_filters( 'pyis_member_submission_error', __( 'Hmm, it looks like there was a problem submitting your updates.', PyisMemberProfile::$plugin_id ) ); ?>
             </div>
 
         </form>

@@ -10,14 +10,16 @@
     padding: 1em;
     width: 100%;
     margin-bottom: 1em;
-    border: 4px #17AF17 solid;
-    color: #17AF17;
+    background-color: #17AF17;
+    color: #FFF;
+    font-weight: 700;
 }
 
 .pyis-error-message {
     padding: 1em;
     width: 100%;
     margin-top: 1em;
-    border: 4px #FF0000 solid;
-    color: #FF0000;
+    background-color: #FF0000;
+    color: #FFF;
+    font-weight: 700;
 }
