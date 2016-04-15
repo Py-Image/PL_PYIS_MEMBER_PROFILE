@@ -79,13 +79,6 @@ body.is-reveal-open {
     margin-left: 0;
     border: 0; }
 
-#pyis-profile-edit-form .validation-error {
-  border: 4px #FF0000 solid; }
-
-#pyis-profile-edit-form .profile-bottom input[type="text"], #pyis-profile-edit-form .profile-bottom input[type="url"], #pyis-profile-edit-form .profile-bottom input[type="email"], #pyis-profile-edit-form .profile-bottom textarea, #pyis-profile-edit-form .profile-bottom .wp-editor-wrap {
-  max-width: 50%;
-  width: 50%; }
-
 .pyis-success-message {
   padding: 1em;
   width: 100%;
@@ -187,4 +180,14 @@ body, html {
 
 .pyis-member-edit-container input[type="submit"] {
   margin-top: 0.5em; }
+
+.pyis-member-edit-container #pyis-profile-edit-form .validation-error {
+  border: 4px #FF0000 solid; }
+
+.pyis-member-edit-container #pyis-profile-edit-form .profile-bottom textarea, .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom .wp-editor-wrap {
+  max-width: 75%;
+  width: 75%; }
+
+.pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="text"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="url"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="email"] {
+  width: 30%; }
 /*# sourceMappingURL=style.css.map */

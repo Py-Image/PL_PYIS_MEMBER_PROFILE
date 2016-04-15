@@ -1,7 +1,28 @@
 .pyis-member-edit-container {
-    
+
     input[type="submit"] {
         margin-top: 0.5em;
     }
-    
+
+    #pyis-profile-edit-form {
+
+        .validation-error {
+            border: 4px #FF0000 solid;
+        }
+
+        .profile-bottom {
+
+            textarea, .wp-editor-wrap {
+                max-width: 75%;
+                width: 75%;
+            }
+            
+            input[type="text"], input[type="url"], input[type="email"] {
+                width: 30%;
+            }
+
+        }
+
+    }
+
 }
