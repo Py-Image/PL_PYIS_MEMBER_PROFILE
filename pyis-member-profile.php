@@ -74,8 +74,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             
             add_filter( 'template_include', array( $this, 'template_redirect' ) );
             
-            add_filter( 'the_title', array( $this, 'template_title' ), 10, 3 );
-            add_filter( 'wp_title', array( $this, 'template_title' ), 10, 3 );
+            add_filter( 'the_title', array( $this, 'template_page_title' ), 10, 2 );
+            add_filter( 'wp_title', array( $this, 'template_title_tag' ), 10, 3 );
             
             add_action( 'wp_head', array( $this, 'template_meta' ) );
             
@@ -251,22 +251,62 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         }
         
         /**
+         * Generate Page Title on the injected Page Template
+         *
+         * @access      public
+         * @since       1.0
+         * @return      string $title <title> Text
+         */
+        public function template_page_title( $title, $id ) {
+            
+            if ( $id == 0 ) {
+            
+                if ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) {
+
+                    return __( 'Member Directory', $plugin->id );
+
+                }
+                else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
+
+                    // Made available before wp_head() is called
+                    global $pyis_user_data;
+
+                    // If the user doesn't exist or isn't Subscriber-level or Admin-level
+                    if ( ( ! $pyis_user_data ) 
+                        || ( ( $pyis_user_data->roles[0] !== 'subscriber' ) && ( $pyis_user_data->roles[0] !== 'administrator' ) ) ) {
+                        return __( "Member Not Found", $this->plugin_id );
+                    }
+                    else {
+                        return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) );
+                    }
+
+                }
+                
+            }
+            
+            return $title;
+            
+        }
+        
+        /**
          * Generate <title> tag based on the injected Page Template
          *
          * @access      public
          * @since       1.0
          * @return      string $title <title> Text
          */
-        public function template_title( $title, $sep, $seplocation ) {
+        public function template_title_tag( $title, $sep, $seplocation ) {
             
             if ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) {
+                
                 return __( 'Member Directory', $plugin->id );
+                
             }
             else if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
-    
+
                 // Made available before wp_head() is called
                 global $pyis_user_data;
-                
+
                 // If the user doesn't exist or isn't Subscriber-level or Admin-level
                 if ( ( ! $pyis_user_data ) 
                     || ( ( $pyis_user_data->roles[0] !== 'subscriber' ) && ( $pyis_user_data->roles[0] !== 'administrator' ) ) ) {
@@ -275,7 +315,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 else {
                     return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) );
                 }
-                
+
             }
             
             return $title;
