@@ -18,7 +18,7 @@ $wp_query->is_404 = false;
 $wp_query->is_page = true;
 
 $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-$number_per_page = 4;
+$number_per_page = 15;
 $course_id = get_theme_mod( 'pyis_course', 0 );
 
 get_header();
@@ -172,7 +172,7 @@ get_header();
                     
                     <td>
                         <a href="/members/<?php echo strtolower( rawurlencode( $pyis_user_data->user_login ) ); ?>" title="<?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
-                            <?php echo get_avatar( $user_id ); ?>
+                            <?php echo get_avatar( $user_id, 48 ); ?>
                         </a>
                     </td>
                     <td>
