@@ -179,7 +179,7 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
                 
                 <div class="pyis-user-public-view alignright x-column x-sm x-1-5">
                 
-                    <a href="?public" class="x-btn">View Public Profile</a>
+                    <a href="?public" class="x-btn"><?php _e( 'View Public Profile', PyisMemberProfile::$plugin_id ); ?></a>
                     
                 </div>
 
