@@ -1,5 +1,31 @@
 .pyis-member-edit-container {
 
+    @media only screen and (max-width: 767px) {
+
+        .pyis-user-public-view {
+
+            text-align: center;
+
+        }
+
+        .pyis-user-public-view {
+            margin: 0;
+        }
+
+        .pyis-user-course-meta {
+
+            input[type="text"], input[type="url"], input[type="email"] {
+                width: 100%;
+            }
+
+        }
+
+    }
+
+    .pyis-avatar-container {
+        text-align: center;
+    }
+
     input[type="submit"] {
         margin-top: 0.5em;
     }
@@ -12,13 +38,8 @@
 
         .profile-bottom {
 
-            textarea, .wp-editor-wrap {
-                max-width: 75%;
-                width: 75%;
-            }
-            
             input[type="text"], input[type="url"], input[type="email"] {
-                width: 30%;
+                width: 100%;
             }
 
         }

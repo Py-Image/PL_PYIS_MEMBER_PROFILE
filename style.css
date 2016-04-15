@@ -98,9 +98,6 @@ body.is-reveal-open {
 body, html {
   height: 100%; }
 
-.open-modal-container {
-  text-align: center; }
-
 #open-modal-link:hover {
   cursor: pointer; }
 
@@ -178,16 +175,30 @@ body, html {
   box-shadow: none;
   padding: 0.35em 1em; }
 
+@media only screen and (max-width: 767px) {
+  .pyis-member-profile-container .pyis-avatar-container, .pyis-member-profile-container .pyis-user-course-meta h3 {
+    text-align: center; } }
+
+.pyis-member-profile-container .pyis-user-course-meta h3 {
+  margin-top: 0; }
+
+@media only screen and (max-width: 767px) {
+  .pyis-member-edit-container .pyis-user-public-view {
+    text-align: center; }
+  .pyis-member-edit-container .pyis-user-public-view {
+    margin: 0; }
+  .pyis-member-edit-container .pyis-user-course-meta input[type="text"], .pyis-member-edit-container .pyis-user-course-meta input[type="url"], .pyis-member-edit-container .pyis-user-course-meta input[type="email"] {
+    width: 100%; } }
+
+.pyis-member-edit-container .pyis-avatar-container {
+  text-align: center; }
+
 .pyis-member-edit-container input[type="submit"] {
   margin-top: 0.5em; }
 
 .pyis-member-edit-container #pyis-profile-edit-form .validation-error {
   border: 4px #FF0000 solid; }
 
-.pyis-member-edit-container #pyis-profile-edit-form .profile-bottom textarea, .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom .wp-editor-wrap {
-  max-width: 75%;
-  width: 75%; }
-
 .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="text"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="url"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="email"] {
-  width: 30%; }
+  width: 100%; }
 /*# sourceMappingURL=style.css.map */

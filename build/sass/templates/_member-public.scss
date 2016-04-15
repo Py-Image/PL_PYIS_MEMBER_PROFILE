@@ -1,0 +1,19 @@
+.pyis-member-profile-container {
+
+    @media only screen and (max-width: 767px) {
+
+        .pyis-avatar-container, .pyis-user-course-meta h3 {
+            text-align: center;
+        }
+
+    }
+    
+    .pyis-user-course-meta {
+        
+        h3 {
+            margin-top: 0;
+        }
+        
+    }
+
+}

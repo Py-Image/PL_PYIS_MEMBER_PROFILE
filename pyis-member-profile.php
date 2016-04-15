@@ -24,7 +24,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
         private $member_directory_regex = '/\/member-directory(|\/)(page\/\d)?/i';
         private $member_profile_regex = '/\/members\/.+(|\/)$/i';
         private $member_profile_json_regex = '/\/members\/.+(|\/)?json$/i';
-        private $member_profile_preview_regex = '/\/members\/.+(|\/)?preview/i';
+        private $member_profile_public_regex = '/\/members\/.+(|\/)?public/i';
 
         /**
          * Get active instance
@@ -237,7 +237,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 die();
                 
             }
-            else if ( ( preg_match( $this->member_profile_preview_regex, $_SERVER['REQUEST_URI'] ) )
+            else if ( ( preg_match( $this->member_profile_public_regex, $_SERVER['REQUEST_URI'] ) )
                     || ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) ) {
                 
                 header( 'HTTP/1.1 200 OK' );

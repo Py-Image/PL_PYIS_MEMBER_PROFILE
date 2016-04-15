@@ -28,55 +28,59 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
             
         <div class="pyis-profile-top x-column x-sm x-1-1">
 
-            <div class="pyis-avatar-container alignleft">
+            <div class="pyis-avatar-container alignleft x-column x-sm x-1-5">
 
                 <?php echo get_avatar( $user_id, 150 ); ?>
 
             </div>
-
-            <h3 style="margin-top: 0;"><?php echo trim( $pyis_user_data->first_name ); ?> <?php echo trim(  $pyis_user_data->last_name ); ?></h3>
-
-            <?php 
-
-            $register_date = new DateTime( $pyis_user_data->user_registered );
-            $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
-            $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
             
-            // If due to a LearnDash bug they have over 100% completion, reset to 100%
-            if ( $course_progress > 100 ) $course_progress = 100;
+            <div class="pyis-user-course-meta alignleft x-column x-sm x-4-5">
 
-            ?>
+                <h3><?php echo trim( $pyis_user_data->first_name ); ?> <?php echo trim(  $pyis_user_data->last_name ); ?></h3>
 
-            <?php echo apply_filters( 'the_content', 
-                sprintf( 
-                    __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
-                    $register_date->format( 'F jS, Y' ) 
-                ) 
-            ); ?>
+                <?php 
 
-            <?php if ( $course_progress == 100 ) {
-                echo apply_filters( 'the_content', 
+                $register_date = new DateTime( $pyis_user_data->user_registered );
+                $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
+                $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
+
+                // If due to a LearnDash bug they have over 100% completion, reset to 100%
+                if ( $course_progress > 100 ) $course_progress = 100;
+
+                ?>
+
+                <?php echo apply_filters( 'the_content', 
                     sprintf( 
-                        __( 'Course Progress: <strong>%g%%</strong>', PyisMemberProfile::$plugin_id ), 
-                        number_format( $course_progress, 2, '.', ',' )
+                        __( 'PyImageSearch Gurus Member Since %s', PyisMemberProfile::$plugin_id ), 
+                        $register_date->format( 'F jS, Y' ) 
                     ) 
-                );
-            }
-            else {
-                echo apply_filters( 'the_content', 
-                    sprintf( 
-                        __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
-                        number_format( $course_progress, 2, '.', ',' )
-                    ) 
-                );
-            } ?>
+                ); ?>
 
-            <?php echo apply_filters( 'the_content', 
-                 sprintf( 
-                     __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
-                     ( learndash_course_completed( $user_id, $course_id ) ? '<strong>' . __( 'Yes', PyisMemberProfile::$plugin_id ) . '</strong>' : __( 'No', PyisMemberProfile::$plugin_id ) ) 
-                 ) 
-            ); ?>
+                <?php if ( $course_progress == 100 ) {
+                    echo apply_filters( 'the_content', 
+                        sprintf( 
+                            __( 'Course Progress: <strong>%g%%</strong>', PyisMemberProfile::$plugin_id ), 
+                            number_format( $course_progress, 2, '.', ',' )
+                        ) 
+                    );
+                }
+                else {
+                    echo apply_filters( 'the_content', 
+                        sprintf( 
+                            __( 'Course Progress: %g%%', PyisMemberProfile::$plugin_id ), 
+                            number_format( $course_progress, 2, '.', ',' )
+                        ) 
+                    );
+                } ?>
+
+                <?php echo apply_filters( 'the_content', 
+                     sprintf( 
+                         __( 'Completed Course: %s', PyisMemberProfile::$plugin_id ),
+                         ( learndash_course_completed( $user_id, $course_id ) ? '<strong>' . __( 'Yes', PyisMemberProfile::$plugin_id ) . '</strong>' : __( 'No', PyisMemberProfile::$plugin_id ) ) 
+                     ) 
+                ); ?>
+                
+            </div>
 
         </div>
 
