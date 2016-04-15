@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $course_id = get_theme_mod( 'pyis_course', 0 );
 
+get_header();
+
 ?>
 
 <div class="pyis-member-profile-container x-container max width offset entry-wrap">

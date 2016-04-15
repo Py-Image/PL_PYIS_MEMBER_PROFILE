@@ -34,23 +34,47 @@ if (
     }
     
     // There's info from wp_usermeta and wp_users being shown here. We need to update it differently for each.
-    $update_user_meta = array(
-        'description',
+    
+    // These fields will have NO TAGS
+    $update_user_meta_no_tags = array(
         'linkedin',
         'github',
         'twitter',
     );
     
-    $update_user_data = array(
+    // These fields just don't allow scary things, like <script>s
+    $update_user_meta_no_scripts = array(
+        'description',
+        'pyis_skills',
+    );
+    
+    // These fields cannot be blank
+    $update_user_data_no_blanks = array(
         'first_name',
         'last_name',
     );
     
-    foreach ( $update_user_meta as $key ) {
+    // These fields can be blank
+    $update_user_data_can_blank = array(
+        'user_url',
+    );
+    
+    foreach ( $update_user_meta_no_tags as $key ) {
         
         if ( isset( $_POST[ $key ] ) ) {
             
-            update_user_meta( $user_id, $key, $_POST[ $key ] );
+            update_user_meta( $user_id, $key, strip_tags( $_POST[ $key ] ) );
+            
+        }
+        
+    }
+    
+    // Allow all HTML excerpt for dangerous ones, like <script> tags
+    foreach ( $update_user_meta_no_scripts as $key ) {
+        
+        if ( isset( $_POST[ $key ] ) ) {
+        
+            update_user_meta( $user_id, $key, wp_filter_post_kses( $_POST[ $key ] ) );
             
         }
         
@@ -61,19 +85,25 @@ if (
     );
     
     // First and Last Name cannot be empty
-    foreach ( $update_user_data as $key ) {
+    foreach ( $update_user_data_no_blanks as $key ) {
         
         if ( ( isset( $_POST[ $key ] ) ) && ( $_POST[ $key ] !== '' ) ) {
             
-            $insert_user_data[ $key ] = $_POST[ $key ];
+            $insert_user_data[ $key ] = strip_tags( $_POST[ $key ] );
             
         }
         
     }
     
-    // We allow blank values to be entered for user_url
-    if ( isset( $_POST['user_url'] ) ) {
-        $insert_user_data['user_url'] = $_POST['user_url'];
+    // We allow blank values to be entered
+    foreach ( $update_user_data_can_blank as $key ) {
+        
+        if ( isset( $_POST[ $key ] ) ) {
+            
+            $insert_user_data[ $key ] = strip_tags( $_POST[ $key ] );
+            
+        }
+        
     }
     
     $update_user = wp_update_user( $insert_user_data );
@@ -87,6 +117,8 @@ else {
 }
 
 $course_id = get_theme_mod( 'pyis_course', 0 );
+
+get_header();
 
 ?>
 

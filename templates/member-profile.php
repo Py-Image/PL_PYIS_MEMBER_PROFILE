@@ -45,7 +45,7 @@ $user_id = $user->data->ID;
 global $pyis_user_data;
 $pyis_user_data = get_userdata( $user_id );
 
-get_header();
+// get_header() should be called within your template, especially for an User Edit Form, to ensure the some WP Filters hit at the right time
 
 if ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) :
 

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PyImageSearch Profile Plugin 1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/pyis-member-profile\n"
-"POT-Creation-Date: 2016-04-15 15:10:28+00:00\n"
+"POT-Creation-Date: 2016-04-15 21:32:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,64 +14,64 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: pyis-member-profile.php:263 pyis-member-profile.php:298
-#: pyis-member-profile.php:299
+#: pyis-member-profile.php:268 pyis-member-profile.php:304
+#: pyis-member-profile.php:340 pyis-member-profile.php:341
 msgid "Member Directory"
 msgstr ""
 
-#: pyis-member-profile.php:273 pyis-member-profile.php:310
-#: pyis-member-profile.php:311
+#: pyis-member-profile.php:279 pyis-member-profile.php:315
+#: pyis-member-profile.php:352 pyis-member-profile.php:353
 msgid "Member Not Found"
 msgstr ""
 
-#: pyis-member-profile.php:276 pyis-member-profile.php:315
-#: pyis-member-profile.php:316 templates/member-directory.php:174
-#: templates/member-directory.php:179
+#: pyis-member-profile.php:282 pyis-member-profile.php:318
+#: pyis-member-profile.php:357 pyis-member-profile.php:358
+#: templates/member-directory.php:177 templates/member-directory.php:182
 msgid "%s's Profile"
 msgstr ""
 
-#: pyis-member-profile.php:337
+#: pyis-member-profile.php:379
 msgid "PyImageSearch Profile Settings"
 msgstr ""
 
-#: pyis-member-profile.php:351
+#: pyis-member-profile.php:393
 msgid "Select a Course"
 msgstr ""
 
-#: pyis-member-profile.php:365
+#: pyis-member-profile.php:407
 msgid "Course"
 msgstr ""
 
-#: pyis-member-profile.php:401
+#: pyis-member-profile.php:443
 msgid "PyImageSearch Member Profile"
 msgstr ""
 
-#: pyis-member-profile.php:406
+#: pyis-member-profile.php:448
 msgid "Skills"
 msgstr ""
 
-#: pyis-member-profile.php:462
+#: pyis-member-profile.php:504
 msgid ""
 "You can change your profile picture on <a href='%s'>Gravatar</a>, or via "
 "your profile page once you're logged in."
 msgstr ""
 
-#: pyis-member-profile.php:709
+#: pyis-member-profile.php:751
 msgid ""
 "<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires "
 "<strong><a href = \"%s\" target=\"_blank\">MemberPress</a></strong> to be "
 "Active!</p>"
 msgstr ""
 
-#: pyis-member-profile.php:726
+#: pyis-member-profile.php:768
 msgid ""
 "<p>The Plugin <strong>PyImageSearch Profile Plugin</strong> requires "
 "<strong><a href = \"%s\" target=\"_blank\">LearnDash</a></strong> to be "
 "Active!</p>"
 msgstr ""
 
-#: templates/member-directory.php:33 templates/member-edit.php:93
-#: templates/member-public.php:24
+#: templates/member-directory.php:33 templates/member-edit.php:131
+#: templates/member-public.php:26
 msgid "Course Not Set In <a href=\"%s\">Customizer</a>"
 msgstr ""
 
@@ -103,100 +103,108 @@ msgstr ""
 msgid "Course Progress"
 msgstr ""
 
-#: templates/member-directory.php:184 templates/member-edit.php:153
-#: templates/member-public.php:64
+#: templates/member-directory.php:193 templates/member-edit.php:206
+#: templates/member-public.php:81
 msgid "Yes"
 msgstr ""
 
-#: templates/member-directory.php:184 templates/member-edit.php:153
-#: templates/member-public.php:64
+#: templates/member-directory.php:193 templates/member-edit.php:206
+#: templates/member-public.php:81
 msgid "No"
 msgstr ""
 
-#: templates/member-directory.php:198
+#: templates/member-directory.php:207
 msgid "&laquo;"
 msgstr ""
 
-#: templates/member-directory.php:199
+#: templates/member-directory.php:208
 msgid "&raquo;"
 msgstr ""
 
-#: templates/member-directory.php:206
+#: templates/member-directory.php:215
 msgid ""
 "Sorry, no members were found using your supplied filters. Looking for "
 "someone in particular? <a href=\"%s\">Send me a message</a>"
 msgstr ""
 
-#: templates/member-edit.php:106
-msgid "Submission Successful"
+#: templates/member-edit.php:144
+msgid "Nice, your changes have been saved."
 msgstr ""
 
-#: templates/member-edit.php:126
+#: templates/member-edit.php:166
 msgid "Enter Your First Name"
 msgstr ""
 
-#: templates/member-edit.php:126
+#: templates/member-edit.php:166
 msgid "Enter Your Last Name"
 msgstr ""
 
-#: templates/member-edit.php:138 templates/member-public.php:49
+#: templates/member-edit.php:181 templates/member-public.php:56
 msgid "PyImageSearch Gurus Member Since %s"
 msgstr ""
 
-#: templates/member-edit.php:145 templates/member-public.php:56
+#: templates/member-edit.php:189 templates/member-public.php:64
+msgid "Course Progress: <strong>%g%%</strong>"
+msgstr ""
+
+#: templates/member-edit.php:197 templates/member-public.php:72
 msgid "Course Progress: %g%%"
 msgstr ""
 
-#: templates/member-edit.php:152 templates/member-public.php:63
+#: templates/member-edit.php:205 templates/member-public.php:80
 msgid "Completed Course: %s"
 msgstr ""
 
-#: templates/member-edit.php:161 templates/member-public.php:72
+#: templates/member-edit.php:214
+msgid "View Public Profile"
+msgstr ""
+
+#: templates/member-edit.php:224 templates/member-public.php:91
 msgid "About Me:"
 msgstr ""
 
-#: templates/member-edit.php:167 templates/member-public.php:77
+#: templates/member-edit.php:230 templates/member-public.php:96
 msgid "Skills:"
 msgstr ""
 
-#: templates/member-edit.php:173
+#: templates/member-edit.php:240
 msgid "LinkedIn"
 msgstr ""
 
-#: templates/member-edit.php:174
+#: templates/member-edit.php:241
 msgid "Enter Your LinkedIn URL"
 msgstr ""
 
-#: templates/member-edit.php:176
+#: templates/member-edit.php:243
 msgid "GitHub"
 msgstr ""
 
-#: templates/member-edit.php:177
+#: templates/member-edit.php:244
 msgid "Enter Your GitHub URL"
 msgstr ""
 
-#: templates/member-edit.php:179
+#: templates/member-edit.php:246
 msgid "Twitter"
 msgstr ""
 
-#: templates/member-edit.php:180
+#: templates/member-edit.php:247
 msgid "Enter Your Twitter URL"
 msgstr ""
 
-#: templates/member-edit.php:182 templates/member-public.php:121
+#: templates/member-edit.php:249 templates/member-public.php:140
 msgid "Website"
 msgstr ""
 
-#: templates/member-edit.php:183
+#: templates/member-edit.php:250
 msgid "Enter Your Website"
 msgstr ""
 
-#: templates/member-edit.php:187
+#: templates/member-edit.php:256
 msgid "Save Changes"
 msgstr ""
 
-#: templates/member-edit.php:190
-msgid "Submission Error"
+#: templates/member-edit.php:259
+msgid "Hmm, it looks like there was a problem submitting your updates."
 msgstr ""
 
 #: templates/member-modal.php:15
@@ -222,23 +230,23 @@ msgstr ""
 msgid "No Member Found For Your Request"
 msgstr ""
 
-#: templates/member-public.php:85
+#: templates/member-public.php:104
 msgid "LinkedIn Profile"
 msgstr ""
 
-#: templates/member-public.php:86
+#: templates/member-public.php:105
 msgid "GitHub Profile"
 msgstr ""
 
-#: templates/member-public.php:87
+#: templates/member-public.php:106
 msgid "Twitter Profile"
 msgstr ""
 
-#: templates/member-public.php:108
+#: templates/member-public.php:127
 msgid "%s's %s Profile"
 msgstr ""
 
-#: templates/member-public.php:137
+#: templates/member-public.php:156
 msgid "%s's Website"
 msgstr ""
 
