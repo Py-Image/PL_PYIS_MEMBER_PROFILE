@@ -267,8 +267,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 // Made available before wp_head() is called
                 global $pyis_user_data;
                 
-                // If the user doesn't exist or isn't Subscriber-level
-                if ( ( ! $pyis_user_data ) || ( $pyis_user_data->roles[0] !== 'subscriber' ) ) {
+                // If the user doesn't exist or isn't Subscriber-level or Admin-level
+                if ( ( ! $pyis_user_data ) 
+                    || ( ( $pyis_user_data->roles[0] !== 'subscriber' ) && ( $pyis_user_data->roles[0] !== 'administrator' ) ) ) {
                     return __( "Member Not Found", $this->plugin_id );
                 }
                 else {
@@ -302,8 +303,9 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                     // Made available before wp_head() is called
                     global $pyis_user_data;
                     
-                    // If the user doesn't exist or isn't Subscriber-level
-                    if ( ( ! $pyis_user_data ) || ( $pyis_user_data->roles[0] !== 'subscriber' ) ) : ?>
+                    // If the user doesn't exist or isn't Subscriber-level or Admin-level
+                    if ( ( ! $pyis_user_data ) 
+                        || ( ( $pyis_user_data->roles[0] !== 'subscriber' ) && ( $pyis_user_data->roles[0] !== 'administrator' ) ) ) : ?>
 
                         <meta property="og:title" content="<?php _e( "Member Not Found", $this->plugin_id ); ?>">
                         <meta property="twitter:title" content="<?php _e( "Member Not Found", $this->plugin_id ); ?>">

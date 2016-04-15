@@ -80,8 +80,9 @@ get_header();
         
         <?php 
         
+        global $wpdb;
+        
         $user_args = array(
-            'role' => 'subscriber',
             'number' => $number_per_page,
             'meta_key' => 'last_name',
             'orderby' => 'meta_value',
@@ -89,6 +90,19 @@ get_header();
             'paged' => $paged,
             'meta_query'     => array(
                 'relation' => 'AND', // Based on $_GET, we tack onto this with successive rules that must all be TRUE
+                array(
+                    'relation' => 'OR', // In order to query two Roles with wp_user_query() you need to use a Meta Query. Not very intuitive.
+                    array( 
+                        'key' => $wpdb->prefix . 'capabilities',
+                        'value' => 'subscriber',
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key' => $wpdb->prefix . 'capabilities',
+                        'value' => 'administrator',
+                        'compare' => 'LIKE',
+                    ),
+                ),
             ),
         );
         

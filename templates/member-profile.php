@@ -36,7 +36,7 @@ $pyis_user_data = get_userdata( $user_id );
 
 get_header();
 
-if ( $user->roles[0] == 'subscriber' ) :
+if ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) :
 
     if ( get_current_user_id() == $user_id ) {
         include( PyisMemberProfile::pyis_locate_template( 'member-edit.php' ) );
