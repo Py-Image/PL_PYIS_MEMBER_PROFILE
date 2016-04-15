@@ -79,7 +79,7 @@ body.is-reveal-open {
     margin-left: 0;
     border: 0; }
 
-#pyis_profile_edit .validation-error {
+#pyis-profile-edit-form .validation-error {
   border: 4px #FF0000 solid; }
 
 .pyis-success-message {

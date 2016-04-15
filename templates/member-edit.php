@@ -44,12 +44,11 @@ if (
     $update_user_data = array(
         'first_name',
         'last_name',
-        'user_url',
     );
     
     foreach ( $update_user_meta as $key ) {
         
-        if ( ( isset( $_POST[ $key ] ) ) && ( $_POST[ $key ] !== '' ) ) {
+        if ( isset( $_POST[ $key ] ) ) {
             
             update_user_meta( $user_id, $key, $_POST[ $key ] );
             
@@ -60,6 +59,8 @@ if (
     $insert_user_data = array(
         'ID' => $user_id,
     );
+    
+    // First and Last Name cannot be empty
     foreach ( $update_user_data as $key ) {
         
         if ( ( isset( $_POST[ $key ] ) ) && ( $_POST[ $key ] !== '' ) ) {
@@ -68,6 +69,11 @@ if (
             
         }
         
+    }
+    
+    // We allow blank values to be entered for user_url
+    if ( isset( $_POST['user_url'] ) ) {
+        $insert_user_data['user_url'] = $_POST['user_url'];
     }
     
     $update_user = wp_update_user( $insert_user_data );
@@ -122,8 +128,8 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 
                 </div>
 
-                <label>
-                    <input type="text" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input type="text" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
+                <span class="pyis-name-error-hint" style="display: none;"></span>
+                <input required type="text" class="name-field" name="first_name" value="<?php echo $pyis_user_data->first_name; ?>" placeholder="<?php _e( 'Enter Your First Name', PyisMemberProfile::$plugin_id ); ?>" /> <input required type="text" class="name-field" name="last_name" value="<?php echo $pyis_user_data->last_name; ?>" placeholder="<?php _e( 'Enter Your Last Name', PyisMemberProfile::$plugin_id ); ?>" />
 
                 <?php 
 

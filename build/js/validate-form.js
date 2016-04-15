@@ -18,6 +18,22 @@ jQuery( function( $ ) {
                 // Count the invalid fields
                 var invalidFields = 0;
                 
+                $( '.pyis-name-error-hint' ).html( '' ).hide();
+                
+                $( 'input.name-field' ).each( function( index, element ) {
+                    
+                    $( element ).removeClass( 'validation-error' );
+                    
+                    if ( $( element ).val().length == 0 ) {
+                        
+                        $( element ).addClass( 'validation-error' );
+                        $( element ).prevAll( '.pyis-name-error-hint:first-of-type' ).html( 'Please fill out this field.<br />' ).show();
+                        invalidFields++;
+                        
+                    }
+                    
+                } );
+                
                 $( '.pyis-validate-url' ).each( function( index, element ) {
                     
                     $( element ).removeClass( 'validation-error' );
