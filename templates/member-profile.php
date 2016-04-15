@@ -18,7 +18,9 @@ $wp_query->is_404 = false;
 $wp_query->is_page = true;
 
 // Since we are not a real Page and have no context of where we came from, we need to grab the User from the URL
-$user_name = explode( '/', $_SERVER['REQUEST_URI'] );
+$url = $_SERVER['REQUEST_URI'];
+$url = rtrim( $url, '/' ); // If there's a trailing slash, remove it so we can ensure we grab the User Name
+$user_name = explode( '/', $url );
 $user_name = $user_name[ count( $user_name ) - 1 ];
 
 // Sometimes extra parameters that aren't our ?json one may get added. In this case, let's ignore them.

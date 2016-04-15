@@ -69,13 +69,13 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 
         <div class="pyis-profile-bottom x-column x-sm x-1-1">
 
+            <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
             <?php if ( get_user_meta( $user_id, 'description', true ) !== '' ) : ?>
-                <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
                 <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) ); ?>
             <?php endif; ?>
 
+            <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
             <?php if ( get_user_meta( $user_id, 'pyis_skills', true ) !== '' ) : ?>
-                <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
                 <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'pyis_skills', true ) ); ?>
             <?php endif; ?>
             
@@ -87,13 +87,11 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
                 'twitter' => __( 'Twitter Profile', PyisMemberProfile::$plugin_id ),
             );
 
-            foreach ( $user_meta_urls as $key => $label ) : 
+            foreach ( $user_meta_urls as $key => $label ) : ?>
+            
+                <h6><?php echo $label; ?></h6>
 
-                if ( get_user_meta( $user_id, $key, true ) !== '' ) : ?>
-
-                    <h6><?php echo $label; ?></h6>
-                    
-                    <?php
+                <?php if ( get_user_meta( $user_id, $key, true ) !== '' ) :
             
                     // Ensure we have properly working links
                     $url = get_user_meta( $user_id, $key, true );
@@ -118,9 +116,11 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 
                 <?php endif;
 
-            endforeach;
+            endforeach; ?>
+            
+            <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
 
-            if ( $pyis_user_data->user_url !== '' ) : 
+            <?php if ( $pyis_user_data->user_url !== '' ) : 
             
                 // Ensure we have properly working links
                 $url = $pyis_user_data->user_url;
@@ -140,7 +140,6 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
             
                 ?>
 
-                <h6><?php _e( 'Website', PyisMemberProfile::$plugin_id ); ?></h6>
                 <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
 
             <?php endif; ?>
