@@ -277,7 +277,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                         return __( "Member Not Found", $this->plugin_id );
                     }
                     else {
-                        return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) );
+                        return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name ) . ' ' . trim( $pyis_user_data->last_name ) );
                     }
 
                 }
@@ -313,7 +313,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                     return __( "Member Not Found", $this->plugin_id );
                 }
                 else {
-                    return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) );
+                    return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name ) . ' ' . trim( $pyis_user_data->last_name ) );
                 }
 
             }

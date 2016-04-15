@@ -50,9 +50,12 @@ $course_id = get_theme_mod( 'pyis_course', 0 );
 $course_progress = get_user_meta( $user_id, '_sfwd-course_progress', true );
 $course_progress = ( $course_progress[ $course_id ]['completed'] / $course_progress[ $course_id ]['total'] ) * 100;
 
+// If due to a LearnDash bug they have over 100% completion, reset to 100%
+if ( $course_progress > 100 ) $course_progress = 100;
+
 $data = array(
-    'last_name' => $pyis_user_data->last_name,
-    'first_name' => $pyis_user_data->first_name,
+    'last_name' => trim( $pyis_user_data->last_name ),
+    'first_name' => trim( $pyis_user_data->first_name ),
     'course_progress' => $course_progress,
     'course_completed' => learndash_course_completed( $user_id, $course_id ),
     'url' => get_bloginfo( 'url' ) . $url,
