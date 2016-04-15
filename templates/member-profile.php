@@ -19,6 +19,15 @@ $wp_query->is_page = true;
 
 // Since we are not a real Page and have no context of where we came from, we need to grab the User from the URL
 $url = $_SERVER['REQUEST_URI'];
+
+// Determine if we're intentionally previewing the Profile
+$preview = false;
+if ( strpos( $url, '?preview' ) !== false ) {
+    $preview = true;
+}
+
+$url = str_replace( '?preview', '', $_SERVER['REQUEST_URI'] );
+
 $url = rtrim( $url, '/' ); // If there's a trailing slash, remove it so we can ensure we grab the User Name
 $user_name = explode( '/', $url );
 $user_name = $user_name[ count( $user_name ) - 1 ];
@@ -40,7 +49,7 @@ get_header();
 
 if ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) :
 
-    if ( get_current_user_id() == $user_id ) {
+    if ( ( get_current_user_id() == $user_id ) && ( ! $preview ) ) {
         include( PyisMemberProfile::pyis_locate_template( 'member-edit.php' ) );
     }
     else {
