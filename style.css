@@ -82,6 +82,10 @@ body.is-reveal-open {
 #pyis-profile-edit-form .validation-error {
   border: 4px #FF0000 solid; }
 
+#pyis-profile-edit-form .profile-bottom input[type="text"], #pyis-profile-edit-form .profile-bottom input[type="url"], #pyis-profile-edit-form .profile-bottom input[type="email"], #pyis-profile-edit-form .profile-bottom textarea, #pyis-profile-edit-form .profile-bottom .wp-editor-wrap {
+  max-width: 50%;
+  width: 50%; }
+
 .pyis-success-message {
   padding: 1em;
   width: 100%;
