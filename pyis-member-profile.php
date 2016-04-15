@@ -273,7 +273,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                     return __( "Member Not Found", $this->plugin_id );
                 }
                 else {
-                    return sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name );
+                    return sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) );
                 }
                 
             }
@@ -312,8 +312,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                         
                     <?php else : ?>
 
-                        <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
-                        <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ); ?>">
+                        <meta property="og:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) ); ?>">
+                        <meta property="twitter:title" content="<?php echo sprintf( __( "%s's Profile", $this->plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) ); ?>">
 
                     <?php endif; ?>
 
