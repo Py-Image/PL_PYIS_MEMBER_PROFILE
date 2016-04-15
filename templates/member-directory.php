@@ -171,13 +171,13 @@ get_header();
                 <tr>
                     
                     <td>
-                        <a href="/members/<?php echo trailingslashit( strtolower( rawurlencode( $pyis_user_data->user_login ) ) ); ?>" title="<?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
+                        <a href="/members/<?php echo trailingslashit( strtolower( rawurlencode( $pyis_user_data->user_login ) ) ); ?>" title="<?php echo sprintf( __( "%s's Profile", PyisMemberProfile::$plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) ); ?>">
                             <?php echo get_avatar( $user_id, 48 ); ?>
                         </a>
                     </td>
                     <td>
-                        <a href="/members/<?php echo trailingslashit( strtolower( rawurlencode( $pyis_user_data->user_login ) ) ); ?>" title="<?php echo $pyis_user_data->first_name; ?> <?php echo $pyis_user_data->last_name; _e( "'s Profile", PyisMemberProfile::$plugin_id ); ?>">
-                            <?php echo "$pyis_user_data->last_name, $pyis_user_data->first_name"; ?>
+                        <a href="/members/<?php echo trailingslashit( strtolower( rawurlencode( $pyis_user_data->user_login ) ) ); ?>" title="<?php echo sprintf( __( "%s's Profile", PyisMemberProfile::$plugin_id ), trim( $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name ) ); ?>">
+                            <?php echo trim( $pyis_user_data->last_name ) . ', ' . $pyis_user_data->first_name; ?>
                         </a>
                     </td>
                     <td><?php echo sprintf( '%g%%', number_format( $course_progress, 2, '.', ',' ) ); ?></td>
