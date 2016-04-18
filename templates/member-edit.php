@@ -220,6 +220,8 @@ get_header();
             <div class="profile-bottom x-column x-sm x-1-1">
                 
                 <div class="x-column x-sm x-3-4">
+                    
+                    <input id="pyis_profile_submit" class="x-btn x-btn-regular" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
 
                     <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
                     <?php wp_editor( get_user_meta( $user_id, 'description', true ), 'description', array( 
@@ -253,7 +255,7 @@ get_header();
 
             </div>
 
-            <input id="pyis_profile_submit" class="x-btn x-btn-jumbo" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
+            <input id="pyis_profile_submit" class="x-btn x-btn-regular" type="submit" value="<?php _e( 'Save Changes', PyisMemberProfile::$plugin_id ); ?>" />
                 
             <div class="pyis-error-message" style="display: none;">
                 <?php echo apply_filters( 'pyis_member_submission_error', __( 'Hmm, it looks like there was a problem submitting your updates.', PyisMemberProfile::$plugin_id ) ); ?>
