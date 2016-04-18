@@ -659,7 +659,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             }
             
             // The scripts are only needed for Profile Editing
-            if ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) {
+            if ( ( ! preg_match( $this->member_profile_public_regex, $_SERVER['REQUEST_URI'] ) ) && ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) ) ) {
                 
                 global $current_user;
                 global $pyis_user_data;
