@@ -35,14 +35,16 @@ get_header();
         
         <?php endif; ?>
         
-        <form method="GET" action="/member-directory" class="form-search x-container max width offset">
+        <form method="GET" action="/member-directory" class="pyis-directory-form-search x-container max width offset">
             <div class="x-container max width offset">
-                <div class="x-column x-sm x-1-4">
-                    <label for="graduated">
-                        <input type="checkbox" name="graduated" value="yes" <?php echo ( trim( strtolower( $_GET['graduated'] ) ) == 'yes' ? 'checked="checked"' : '' ); ?> /> <?php _e( 'Graduated', PyisMemberProfile::$plugin_id ); ?>
-                    </label>
+                <div class="x-column x-sm x-1-6 pyis-directory-form-label">
+                    <label><?php echo apply_filters( 'pyis_member_directory_form_label', __( 'Filter Members:', PyisMemberProfile::$plugin_id ) ); ?></label>
                 </div>
-                <div class="x-column x-sm x-1-4">
+                <div class="x-column x-sm x-1-3 pyis-directory-form-search-field">
+                    <label for="s" class="visually-hidden"><?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?></label>
+                    <input type="text" class="search-query" name="s" value="<?php echo $_GET['s']; ?>" placeholder="<?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?>" />
+                </div>
+                <div class="x-column x-sm x-1-6 pyis-directory-form-order">
                     <label for="order"><?php _e( 'Filter By:', PyisMemberProfile::$plugin_id ); ?>
                         <select name="order">
                             <?php
@@ -65,12 +67,13 @@ get_header();
                         </select>
                     </label>
                 </div>
-                <div class="x-column x-sm x-1-4">
-                    <label for="s" class="visually-hidden"><?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?></label>
-                    <input type="text" class="search-query" name="s" value="<?php echo $_GET['s']; ?>" placeholder="<?php _e( 'Search by First or Last Name', PyisMemberProfile::$plugin_id ); ?>" />
+                <div class="x-column x-sm x-1-6 pyis-directory-form-graduated">
+                    <label for="graduated">
+                        <input type="checkbox" name="graduated" value="yes" <?php echo ( trim( strtolower( $_GET['graduated'] ) ) == 'yes' ? 'checked="checked"' : '' ); ?> /> <?php _e( 'Graduated', PyisMemberProfile::$plugin_id ); ?>
+                    </label>
                 </div>
-                <div class="x-column x-sm x-1-4">
-                    <input type="submit" />
+                <div class="x-column x-sm x-1-6 pyis-directory-form-submit">
+                    <input type="submit" value="<?php _e( 'Apply Filters', PyisMemberProfile::$plugin_id ); ?>"/>
                 </div>
             </div>
             <div class="x-container max width offset">

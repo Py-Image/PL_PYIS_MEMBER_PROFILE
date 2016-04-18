@@ -5,10 +5,36 @@
     }
     
     
-    .form-search {
+    .pyis-directory-form-search {
         
-        label[for="graduated"] {
-            margin-top: 0.65em;
+        .pyis-directory-form-search-field {
+            input {
+                width: 100%;
+            }
+        }
+        
+        .pyis-directory-form-order {
+            margin-top: -1.75em;
+        }
+        
+        label[for="graduated"], .pyis-directory-form-label {
+            margin-top: 0.25em;
+        }
+        
+        @media only screen and (max-width: 767px) {
+            
+            label[for="graduated"], .pyis-directory-form-order, .pyis-directory-form-label {
+                margin-top: 0;
+            }
+            
+            .x-container {
+                
+                & > * {
+                    margin-top: 1em;
+                }
+                
+            }
+            
         }
         
         .search-query {

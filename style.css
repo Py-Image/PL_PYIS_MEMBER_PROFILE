@@ -165,13 +165,25 @@ body, html {
 .pyis-member-directory-container .x-container {
   margin-bottom: 0 !important; }
 
-.pyis-member-directory-container .form-search label[for="graduated"] {
-  margin-top: 0.65em; }
+.pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-search-field input {
+  width: 100%; }
 
-.pyis-member-directory-container .form-search .search-query {
+.pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-order {
+  margin-top: -1.75em; }
+
+.pyis-member-directory-container .pyis-directory-form-search label[for="graduated"], .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-label {
+  margin-top: 0.25em; }
+
+@media only screen and (max-width: 767px) {
+  .pyis-member-directory-container .pyis-directory-form-search label[for="graduated"], .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-order, .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-label {
+    margin-top: 0; }
+  .pyis-member-directory-container .pyis-directory-form-search .x-container > * {
+    margin-top: 1em; } }
+
+.pyis-member-directory-container .pyis-directory-form-search .search-query {
   padding: 0 0.65em; }
 
-.pyis-member-directory-container .form-search input[type="submit"] {
+.pyis-member-directory-container .pyis-directory-form-search input[type="submit"] {
   box-shadow: none;
   padding: 0.35em 1em; }
 
