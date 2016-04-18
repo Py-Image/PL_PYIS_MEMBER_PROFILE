@@ -156,7 +156,7 @@ get_header();
                     <?php echo get_avatar( $user_id, 150, false, false, array( 'extra_attr' => 'id="pyis-profile-image"' ) ); ?>
                     <input type="hidden" name="pyis_profile_image" id="pyis_profile_image_data" />
 
-                    <p class="open-modal-container"><a id="open-modal-link" data-open="pyis-image-upload-modal">Upload a New Avatar</a></p>
+                    <p class="open-modal-container"><a id="open-modal-link" data-open="pyis-image-upload-modal"><?php _e( 'Upload a New Profile Picture', PyisMemberProfile::$plugin_id ); ?></a></p>
 
                 </div>
                 

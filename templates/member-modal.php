@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="foundation reveal" id="pyis-image-upload-modal" data-reveal data-v-offset="0">
-    <h3><?php echo apply_filters( 'pyis_member_avatar_title', __( 'Upload a New Avatar', PyisMemberProfile::$plugin_id ) ); ?></h3>
+    <h3><?php echo apply_filters( 'pyis_member_avatar_title', __( 'Upload a New Profile Picture', PyisMemberProfile::$plugin_id ) ); ?></h3>
 
     <div id="image-cropper" class="x-container">
         
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         <div class="x-column x-sm x-1-2">
             <?php 
-            $cropping_instructions = apply_filters( 'pyis_member_avatar_cropping', __( "You can rotate the image using the buttons below.\nTo crop the image: zoom in using the below slider and then click and drag over the image.", PyisMemberProfile::$plugin_id ) );
+            $cropping_instructions = apply_filters( 'pyis_member_avatar_cropping', __( '<ol><li>Click the "Upload" button to select a new profile picture.</li><li>Crop, zoom, and position your profile picture.</li><li>Click "Done" to set your new profile picture.</li></ol>', PyisMemberProfile::$plugin_id ) );
             echo apply_filters( 'the_content', $cropping_instructions ); ?>
             <input type="file" class="cropit-image-input" multiple="false" />
             <button class="cropit-select-image"><?php _e( 'Upload', PyisMemberProfile::$plugin_id ); ?></button>
