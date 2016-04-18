@@ -135,7 +135,7 @@ get_header();
             
                     ?>
             
-                    <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
+                    <a href="<?php echo $link; ?>" target="_blank" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
             
                 <?php else :
                     echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . sprintf( __( 'A %s has not been added', PyisMemberProfile::$plugin_id ), $label ) . '</em>' );
@@ -165,7 +165,7 @@ get_header();
             
                 ?>
 
-                <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
+                <a href="<?php echo $link; ?>" target="_blank" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
 
             <?php else :
                 echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . __( 'A Website has not been added', PyisMemberProfile::$plugin_id ) . '</em>' );
