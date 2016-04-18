@@ -221,4 +221,7 @@ body, html {
 
 .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="text"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="url"], .pyis-member-edit-container #pyis-profile-edit-form .profile-bottom input[type="email"] {
   width: 100%; }
+
+.page-id-0 #wp-link #link-selector > .howto {
+  display: none; }
 /*# sourceMappingURL=style.css.map */

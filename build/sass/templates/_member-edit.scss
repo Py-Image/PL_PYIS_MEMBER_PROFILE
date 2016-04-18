@@ -51,3 +51,23 @@
     }
 
 }
+
+// Since this is outside of the Main Content, it is a bit challenging to grab ahold of.
+// Page IDs technically should never be 0, so this should work without interfering elsewhere
+.page-id-0 {
+    
+    #wp-link {
+        
+        #link-selector {
+        
+            & > .howto {
+                // This holds the toggle to expand a list of Internal Links
+                // For Subscribers, this will be empty as it is being Filtered. This just gets the UI element out of the way
+                display: none;    
+            }
+            
+        }
+        
+    }
+    
+}

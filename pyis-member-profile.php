@@ -92,6 +92,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_action( 'profile_update', array( $this, 'save_skills_field' ) );
 
             add_filter( 'wp_default_editor', array( $this, 'visual_editor_forced_on_frontend' ) );
+            add_filter( 'wp_link_query', array( $this, 'subscribers_cant_link_internally' ), 10, 2 );
             
             add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
             add_filter( 'user_profile_picture_description', array( $this, 'edit_user_gravatar_description' ) );
@@ -491,6 +492,30 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                 return 'tinymce';
                 
             }
+            
+        }
+        
+        /**
+         * Prevent Subsribers from getting a list of Internal Links within wp_editor()
+         * 
+         * @access public
+         * @since 1.0
+         * 
+         * @param  array $results Array of WP_Post objects
+         * @param  array $query   Array of WP_Query arguments
+         * @return array $results
+         */
+        public function subscribers_cant_link_internally( $results, $query ) {
+            
+            global $current_user;
+            
+            if ( $current_user->roles[0] == 'subscriber' ) :
+            
+                return array();
+            
+            endif;
+            
+            return $results;
             
         }
         
