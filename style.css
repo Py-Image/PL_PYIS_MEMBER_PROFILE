@@ -191,12 +191,15 @@ body, html {
   .pyis-member-profile-container .pyis-avatar-container, .pyis-member-profile-container .pyis-user-course-meta h3 {
     text-align: center; } }
 
+.pyis-member-profile-container .pyis-user-public-links {
+  text-align: center; }
+  .pyis-member-profile-container .pyis-user-public-links a {
+    margin-bottom: 1em; }
+
 .pyis-member-profile-container .pyis-user-course-meta h3 {
   margin-top: 0; }
 
 @media only screen and (max-width: 767px) {
-  .pyis-member-edit-container .pyis-user-public-view {
-    text-align: center; }
   .pyis-member-edit-container .pyis-user-public-view {
     margin: 0; }
   .pyis-member-edit-container .pyis-user-course-meta input[type="text"], .pyis-member-edit-container .pyis-user-course-meta input[type="url"], .pyis-member-edit-container .pyis-user-course-meta input[type="email"] {
@@ -204,6 +207,11 @@ body, html {
 
 .pyis-member-edit-container .pyis-avatar-container {
   text-align: center; }
+
+.pyis-member-edit-container .pyis-user-public-links {
+  text-align: center; }
+  .pyis-member-edit-container .pyis-user-public-links a {
+    margin-bottom: 1em; }
 
 .pyis-member-edit-container input[type="submit"] {
   margin-top: 0.5em; }

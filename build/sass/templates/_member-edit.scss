@@ -3,12 +3,6 @@
     @media only screen and (max-width: 767px) {
 
         .pyis-user-public-view {
-
-            text-align: center;
-
-        }
-
-        .pyis-user-public-view {
             margin: 0;
         }
 
@@ -24,6 +18,16 @@
 
     .pyis-avatar-container {
         text-align: center;
+    }
+
+    .pyis-user-public-links {
+        
+        text-align: center;
+        
+        a {
+            margin-bottom: 1em;
+        }
+        
     }
 
     input[type="submit"] {

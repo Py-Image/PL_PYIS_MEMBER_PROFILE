@@ -209,9 +209,11 @@ get_header();
                     
                 </div>
                 
-                <div class="pyis-user-public-view alignright x-column x-sm x-1-5">
+                <div class="pyis-user-public-links alignright x-column x-sm x-1-5">
+                    
+                    <a href="/member-directory" class="x-btn x-btn-regular"><?php _e( 'Back to Member Directory', PyisMemberProfile::$plugin_id ); ?></a>
                 
-                    <a href="?public" class="x-btn"><?php _e( 'View Public Profile', PyisMemberProfile::$plugin_id ); ?></a>
+                    <a href="?public" class="x-btn x-btn-regular"><?php _e( 'View Public Profile', PyisMemberProfile::$plugin_id ); ?></a>
                     
                 </div>
 

@@ -36,7 +36,7 @@ get_header();
 
             </div>
             
-            <div class="pyis-user-course-meta alignleft x-column x-sm x-4-5">
+            <div class="pyis-user-course-meta alignleft x-column x-sm x-3-5">
 
                 <h3><?php echo trim( $pyis_user_data->first_name ); ?> <?php echo trim(  $pyis_user_data->last_name ); ?></h3>
 
@@ -81,6 +81,12 @@ get_header();
                          ( learndash_course_completed( $user_id, $course_id ) ? '<strong>' . __( 'Yes', PyisMemberProfile::$plugin_id ) . '</strong>' : __( 'No', PyisMemberProfile::$plugin_id ) ) 
                      ) 
                 ); ?>
+                
+            </div>
+            
+            <div class="pyis-user-public-links alignright x-column x-sm x-1-5">
+                
+                <a href="/member-directory" class="x-btn x-btn-regular"><?php _e( 'Back to Member Directory', PyisMemberProfile::$plugin_id ); ?></a>
                 
             </div>
 
