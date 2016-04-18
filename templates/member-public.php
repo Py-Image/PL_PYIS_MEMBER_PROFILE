@@ -90,13 +90,17 @@ get_header();
 
             <h6><?php _e( 'About Me:', PyisMemberProfile::$plugin_id ); ?></h6>
             <?php if ( get_user_meta( $user_id, 'description', true ) !== '' ) : ?>
-                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) ); ?>
-            <?php endif; ?>
+                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'description', true ) );
+            else :
+                echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . __( 'No About Me has been added', PyisMemberProfile::$plugin_id ) . '</em>' );
+            endif; ?>
 
             <h6><?php _e( 'Skills:', PyisMemberProfile::$plugin_id ); ?></h6>
             <?php if ( get_user_meta( $user_id, 'pyis_skills', true ) !== '' ) : ?>
-                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'pyis_skills', true ) ); ?>
-            <?php endif; ?>
+                <?php echo apply_filters( 'the_content', get_user_meta( $user_id, 'pyis_skills', true ) );
+            else :
+                echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . __( 'No Skills have been added', PyisMemberProfile::$plugin_id ) . '</em>' );
+            endif; ?>
             
             <?php
             
@@ -124,7 +128,7 @@ get_header();
                     }
             
                     $link_title = sprintf( 
-                        __( "%s's %s Profile", PyisMemberProfile::$plugin_id ), 
+                        __( "%s's %s", PyisMemberProfile::$plugin_id ), 
                         $pyis_user_data->first_name . ' ' . $pyis_user_data->last_name,
                         $label 
                     );
@@ -132,8 +136,10 @@ get_header();
                     ?>
             
                     <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
-
-                <?php endif;
+            
+                <?php else :
+                    echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . sprintf( __( 'A %s has not been added', PyisMemberProfile::$plugin_id ), $label ) . '</em>' );
+                endif;
 
             endforeach; ?>
             
@@ -161,7 +167,9 @@ get_header();
 
                 <a href="<?php echo $link; ?>" title="<?php echo $link_title; ?>"><?php echo $url; ?></a>
 
-            <?php endif; ?>
+            <?php else :
+                echo apply_filters( 'the_content', '<em class="pyis-placeholder">' . __( 'A Website has not been added', PyisMemberProfile::$plugin_id ) . '</em>' );
+            endif; ?>
 
         </div>
 
