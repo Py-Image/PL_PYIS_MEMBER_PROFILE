@@ -35,7 +35,7 @@ get_header();
         
         <?php endif; ?>
         
-        <form method="GET" action="/member-directory" class="pyis-directory-form-search x-container max width offset">
+        <form method="GET" action="/member-directory/" class="pyis-directory-form-search x-container max width offset">
             <div class="x-container max width offset">
                 <div class="x-column x-sm x-1-6 pyis-directory-form-label">
                     <label><?php echo apply_filters( 'pyis_member_directory_form_label', __( 'Filter Members:', PyisMemberProfile::$plugin_id ) ); ?></label>
@@ -73,6 +73,7 @@ get_header();
                     </label>
                 </div>
                 <div class="x-column x-sm x-1-6 pyis-directory-form-submit">
+                    <a href="/member-directory/" class="pyis-directory-reset-filters x-btn x-btn-regular" title="<?php _e( 'Reset Filters', PyisMemberProfile::$plugin_id ); ?>"><?php _e( 'Reset Filters', PyisMemberProfile::$plugin_id ); ?></a>
                     <input type="submit" value="<?php _e( 'Apply Filters', PyisMemberProfile::$plugin_id ); ?>"/>
                 </div>
             </div>

@@ -171,6 +171,9 @@ body, html {
 .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-order {
   margin-top: -1.75em; }
 
+.pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-submit {
+  margin-top: -1.5em; }
+
 .pyis-member-directory-container .pyis-directory-form-search label[for="graduated"], .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-form-label {
   margin-top: 0.25em; }
 
@@ -183,7 +186,9 @@ body, html {
 .pyis-member-directory-container .pyis-directory-form-search .search-query {
   padding: 0 0.65em; }
 
-.pyis-member-directory-container .pyis-directory-form-search input[type="submit"] {
+.pyis-member-directory-container .pyis-directory-form-search input[type="submit"], .pyis-member-directory-container .pyis-directory-form-search .pyis-directory-reset-filters {
+  display: block;
+  width: 100%;
   box-shadow: none;
   padding: 0.35em 1em; }
 

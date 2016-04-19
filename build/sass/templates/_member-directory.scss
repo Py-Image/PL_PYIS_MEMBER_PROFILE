@@ -17,6 +17,10 @@
             margin-top: -1.75em;
         }
         
+        .pyis-directory-form-submit {
+            margin-top: -1.5em;
+        }
+        
         label[for="graduated"], .pyis-directory-form-label {
             margin-top: 0.25em;
         }
@@ -42,7 +46,9 @@
         }
         
         // Default X-Theme Styling makes this an eyesore when aligned horizontally
-        input[type="submit"] {
+        input[type="submit"], .pyis-directory-reset-filters {
+            display: block;
+            width: 100%;
             box-shadow: none;
             padding: 0.35em 1em;
         }
