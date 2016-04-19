@@ -78,6 +78,8 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             add_filter( 'the_title', array( $this, 'template_page_title' ), 10, 2 );
             add_filter( 'wp_title', array( $this, 'template_title_tag' ), 10, 3 );
             
+            add_action( 'init', array( $this, 'override_x_custom_404' ) );
+            
             add_action( 'wp_head', array( $this, 'template_meta' ) );
             
             add_action( 'customize_register', array( $this, 'customize_register' ) );
@@ -361,6 +363,30 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
                     <?php endif; ?>
 
                 <?php }
+                
+            }
+            
+        }
+        
+        /**
+         * Remove the X Custom 404 Extension Template for our Own Slugs, as it breaks a lot of things.
+         * 
+         * @access public
+         * @since 1.0
+         * @return void
+         */
+        public function override_x_custom_404() {
+            
+            if ( defined( 'X_CUSTOM_404_VERSION' ) ) {
+            
+                if ( ( preg_match( $this->member_directory_regex, $_SERVER['REQUEST_URI'] ) ) 
+                    || ( preg_match( $this->member_profile_regex, $_SERVER['REQUEST_URI'] ) )
+                    || ( preg_match( $this->member_profile_public_regex, $_SERVER['REQUEST_URI'] ) )
+                    || ( preg_match( $this->member_profile_json_regex, $_SERVER['REQUEST_URI'] ) ) ) :
+
+                    remove_filter( '404_template', 'x_custom_404_filter_template' );
+
+                endif;
                 
             }
             

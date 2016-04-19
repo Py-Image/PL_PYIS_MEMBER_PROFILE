@@ -16,6 +16,7 @@ global $wp_query;
 // Tricking WP Core functions into thinking we're a real Page.
 $wp_query->is_404 = false;
 $wp_query->is_page = true;
+$wp_query->queried_object->ID = 0;
 
 // Since we are not a real Page and have no context of where we came from, we need to grab the User from the URL
 $url = $_SERVER['REQUEST_URI'];
@@ -47,7 +48,7 @@ $pyis_user_data = get_userdata( $user_id );
 
 // get_header() should be called within your template, especially for an User Edit Form, to ensure the some WP Filters hit at the right time
 
-if ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) :
+if ( ( $user ) && ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) ) :
 
     if ( ( get_current_user_id() == $user_id ) && ( ! $public ) ) {
         include( PyisMemberProfile::pyis_locate_template( 'member-edit.php' ) );

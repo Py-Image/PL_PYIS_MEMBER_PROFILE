@@ -21,7 +21,7 @@ $user_name = $user_name[ count( $user_name ) - 1 ];
 $user = get_user_by( 'login', $user_name );
 $user_id = $user->data->ID;
 
-if ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) {
+if ( ( ! $user ) || ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) {
     
     // No checking JSON for non-subscribers or non-admins
     
