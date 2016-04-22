@@ -102,9 +102,22 @@ get_header();
                         'compare' => 'LIKE',
                     ),
                     array(
-                        'key' => $wpdb->prefix . 'capabilities',
-                        'value' => 'administrator',
-                        'compare' => 'LIKE',
+                        'relation' => 'AND',
+                        array(
+                            'key' => $wpdb->prefix . 'capabilities',
+                            'value' => 'administrator',
+                            'compare' => 'LIKE',
+                        ),
+                        array(
+                            'key' => 'first_name',
+                            'value' => 'Adrian',
+                            'compare' => 'LIKE',
+                        ),
+                        array(
+                            'key' => 'last_name',
+                            'value' => 'Rosebrock',
+                            'compare' => 'LIKE',
+                        )
                     ),
                 ),
             ),

@@ -15,15 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $url = str_replace( '?json', '', $_SERVER['REQUEST_URI'] );
 
+$url = rtrim( $url, '/' ); // If there's a trailing slash, remove it so we can ensure we grab the User Name
+
 $user_name = explode( '/', $url );
 $user_name = $user_name[ count( $user_name ) - 1 ];
 
 $user = get_user_by( 'login', $user_name );
 $user_id = $user->data->ID;
 
-if ( ( ! $user ) || ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) {
+if ( ( ( $user->roles[0] !== 'subscriber' ) && ( ( $user->roles[0] !== 'administrator' ) || ( strtolower( $user->user_login ) !== 'adrian' ) ) ) || ( ! $user ) ) {
     
-    // No checking JSON for non-subscribers or non-admins
+    // No checking JSON for non-subscribers or non-admins that aren't Adrian
     
     header( 'Content-Type: text/html' );
     

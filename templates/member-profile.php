@@ -46,8 +46,7 @@ global $pyis_user_data;
 $pyis_user_data = get_userdata( $user_id );
 
 // get_header() should be called within your template, especially for an User Edit Form, to ensure the some WP Filters hit at the right time
-
-if ( ( $user ) && ( ( $user->roles[0] == 'subscriber' ) || ( $user->roles[0] == 'administrator' ) ) ) :
+if ( ( $user ) && ( ( $user->roles[0] == 'subscriber' ) || ( ( $user->roles[0] == 'administrator' ) && ( strtolower( $user->user_login ) == 'adrian' ) ) ) ) :
 
     if ( ( get_current_user_id() == $user_id ) && ( ! $public ) ) {
         include( PyisMemberProfile::pyis_locate_template( 'member-edit.php' ) );
