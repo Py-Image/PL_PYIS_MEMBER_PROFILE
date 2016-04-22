@@ -497,7 +497,7 @@ if ( ! class_exists( 'PyisMemberProfile' ) ) {
             if ( current_user_can( 'edit_users' ) ) {
                 
                 $skills = empty( $_POST['pyis_skills'] ) ? '' : $_POST['pyis_skills'];
-                update_user_meta( $user_id, 'pyis_skills', $skills );
+                update_user_meta( $user_id, 'pyis_skills', wp_filter_post_kses( $skills ) );
                 
             }
             
